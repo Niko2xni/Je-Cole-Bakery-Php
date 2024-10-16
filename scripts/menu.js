@@ -15,7 +15,7 @@ function addToCart(name, price) {
     };
 
     // Send the item to the PHP server using AJAX (fetch)
-    fetch('/scripts/add-to-cart.php', {
+    fetch('add-to-cart.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ function addToCart(name, price) {
 
 function removeFromCart(index) {
     // Send an AJAX request to remove the item from the server session
-    fetch('/scripts/remove-from-cart.php', {
+    fetch('remove-from-cart.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ function removeFromCart(index) {
 
 function loadCart() {
     // Fetch the cart items from the server
-    fetch('/scripts/get-cart.php')
+    fetch('get-cart.php')
         .then(response => response.json())
         .then(items => {
             cart = items; // Update the `cart` array with the items fetched from the server

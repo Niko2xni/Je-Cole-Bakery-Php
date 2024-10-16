@@ -19,7 +19,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 30px, 80px;
+    padding: 15px 80px;
     background-color: rgb(46, 33, 2);
 }
 
@@ -198,7 +198,7 @@ footer {
 /* Desktop styles */
 @media screen and (min-width: 993px) {
   #header {
-    padding: 30px 80px;
+    padding: 15px 80px;
   }
   #logo {
     height: 70px;
