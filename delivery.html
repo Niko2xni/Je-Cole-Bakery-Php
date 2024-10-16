@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Je'Cole's Bakery - Billing Information</title>
+    <link rel="stylesheet" href="delivery.css">
+    <link rel="icon" href="images/tab.png">
+</head>
+<body>
+    <section id="header">
+        <a href="index.html"><img src="images/logoWhite.png" id="logo"></a>
+        <nav>
+            <ul id="navbar">
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="aboutus.html">About Us</a></li>
+                <li><a href="index.html">Log in</a></li>
+            </ul>
+        </nav>
+    </section>
+
+    <section id="delivery-info">
+        <div class="delivery-container">
+            <h2>Billing Information</h2>
+            <form id="delivery">
+                <label for="house">House/Unit No.:</label>
+                <input type="text" id="house" name="house" required>
+
+                <label for="street">Street:</label>
+                <input type="text" id="street" name="street" required>
+
+                <label for="barangay">Barangay:</label>
+                <input type="text" id="barangay" name="barangay" required>
+
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" required>
+
+                <label for="postalCode">Postal Code:</label>
+                <input type="text" id="postalCode" pattern="\d*" name="postalCode" required>
+
+                <label for="paymentMethod">Payment Method:</label>
+                <select id="paymentMethod" name="paymentMethod" required>
+                    <option value="" disabled selected>Select a payment method</option>
+
+                    <option value="Gcash">Gcash</option>
+                    <option value="PayMaya">PayMaya</option>
+                    <option value="BDO">BDO</option>
+                    <option value="Cash on delivery">Cash on delivery</option>
+                </select>
+
+                <div class="total-container">
+                    <p id="cartTotal">TOTAL: ₱ 0.00</p>
+                </div>
+
+                <button type="submit" class="pay-btn" id="payNow">PAY NOW</button>
+            </form>
+        </div>
+    </section>
+
+    <script src="scripts/delivery.js"></script>
+</body>
+</html>
