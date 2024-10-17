@@ -41,7 +41,7 @@ if (isset($_POST['login'])) {
         window.onload = function() {
             <?php if ($login_successful): ?>
                 alert("Login successfully submitted!");
-                window.location.href = "index.html"; 
+                window.location.href = "index.php"; 
             <?php elseif ($error_message): ?>
                 alert("<?php echo addslashes($error_message); ?>"); 
             <?php endif; ?>
@@ -50,11 +50,11 @@ if (isset($_POST['login'])) {
 </head>
 <body>
     <section id="header">
-        <a href="index.html"><img src="images/logoWhite.png" id="logo"></a>
+        <a href="index.php"><img src="images/logoWhite.png" id="logo"></a>
         <nav>
             <ul id="navbar">
                 <li><a class="active" href="login.php">Log in</a></li>
-                <li><a href="index.html">Menu</a></li>
+                <li><a href="index.php">Menu</a></li>
                 <li><a href="aboutus.html">About Us</a></li>
             </ul>
         </nav>

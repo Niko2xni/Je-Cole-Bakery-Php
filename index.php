@@ -10,11 +10,11 @@
 </head>
 <body>
     <section id="header">
-        <a href="index.html"><img src="images/logoWhite.png" id="logo"></a>
+        <a href="index.php"><img src="images/logoWhite.png" id="logo"></a>
         <nav>
             <ul id="navbar">
                 <li><a href="login.php">Log in</a></li>
-                <li><a class="active" href="index.html">Menu</a></li>
+                <li><a class="active" href="index.php">Menu</a></li>
                 <li><a href="aboutus.html">About Us</a></li>
                 <li><a href="#" id="openCart">Cart</a></li>
             </ul>

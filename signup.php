@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
     $query = "INSERT INTO users (firstname, lastname, number, email, password) VALUES ('$firstname', '$lastname', '$number', '$email', '$password')";
 
     if (mysqli_query($conn, $query)) {
-        header("Location: index.html");
+        header("Location: index.php");
         exit();
 
     } else {
@@ -35,11 +35,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
 </head>
 <body>
 <section id="header">
-        <a href="index.html"><img src="images/logoWhite.png" id="logo"></a>
+        <a href="index.php"><img src="images/logoWhite.png" id="logo"></a>
         <nav>
             <ul id="navbar">
-                <li><a class="active" href="index.html">Log in</a></li>
-                <li><a href="menu.html">Menu</a></li>
+                <li><a class="active" href="login.php">Log in</a></li>
+                <li><a href="index.php">Menu</a></li>
                 <li><a href="aboutus.html">About Us</a></li>
             </ul>
         </nav>
