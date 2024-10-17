@@ -1,3 +1,21 @@
+<?php
+// Connect to the database
+$conn = mysqli_connect("localhost", "root", "", "user_registration");
+
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+$customer_query = "SELECT * FROM users ORDER BY customer_id DESC LIMIT 1";
+$customer_result = mysqli_query($conn, $customer_query);
+$customer_data = mysqli_fetch_assoc($customer_result);
+
+/* Fetch order details
+$order_query = "SELECT item_name, price FROM orders WHERE order_id = '$order_id'";
+$order_result = mysqli_query($conn, $order_query);
+*/
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,19 +35,19 @@
             </tr>
             <tr>
                 <td><b>First Name:</b></td>
-                <td></td>
+                <td><?php echo htmlspecialchars($customer_data['first_name']); ?></td>
             </tr>
             <tr>
                 <td><b>Last Name:</b></td>
-                <td></td>
+                <td><?php echo htmlspecialchars($customer_data['last_name']); ?></td>
             </tr>
             <tr>
                 <td><b>Email:</b></td>
-                <td></td>
+                <td><?php echo htmlspecialchars($customer_data['email']); ?></td>
             </tr>
             <tr>
                 <td><b>Contact Number:</b></td>
-                <td></td>
+                <td><?php echo htmlspecialchars($customer_data['number']); ?></td>
             </tr>
             <tr>
                 <td><b>House Number</b></td>

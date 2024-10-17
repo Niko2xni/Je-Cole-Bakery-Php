@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
         localStorage.setItem("paymentMethod", paymentMethod);
 
         alert("Thank you for ordering! Your order is now being processed");
-        window.location.href = "receipt.html";
+        window.location.href = "receipt.php";
     });
 });
 

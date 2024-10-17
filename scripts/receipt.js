@@ -1,9 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
 
+    /*
     const storedFname = localStorage.getItem("fname"); 
     const storedLname = localStorage.getItem("lname");
     const storedEmail = localStorage.getItem("email");
     const storedNumber = localStorage.getItem("number");
+    */
 
     //new deliv
     const storedHouse = localStorage.getItem("house");
@@ -16,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const storedCart = JSON.parse(localStorage.getItem("cart"));
     const storedTotalPrice = localStorage.getItem("totalPrice");
 
+    /*
     if (storedFname && storedLname && storedEmail && storedNumber) {
  
         document.querySelector("#customerInfo tr:nth-child(2) td:nth-child(2)").textContent = storedFname;
@@ -25,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         alert("No customer data found! Please fill out the sign-up form.");
     }
+    */
 
     //new deliv details
     if (storedHouse && storedStreet && storedBarangay && storedCity && storedPostalCode) {
