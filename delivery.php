@@ -5,7 +5,7 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['payNow'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
     $house = mysqli_real_escape_string($conn, $_POST['houseNumber']);
     $street = mysqli_real_escape_string($conn, $_POST['street']);
     $barangay = mysqli_real_escape_string($conn, $_POST['barangay']);
@@ -49,6 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['payNow'])) {
         <div class="delivery-container">
             <h2>Billing Information</h2>
             <form id="delivery" action="delivery.php" method="POST">
+                <input type="hidden" name="pay" value="1">
                 <label for="house">House/Unit No.:</label>
                 <input type="text" id="house" name="houseNumber" required>
 
@@ -83,6 +84,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['payNow'])) {
         </div>
     </section>
 
-    <script src="scripts/delivery.js"></script>
+
 </body>
 </html>

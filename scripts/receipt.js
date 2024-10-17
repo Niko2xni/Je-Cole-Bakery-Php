@@ -7,12 +7,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const storedNumber = localStorage.getItem("number");
     */
 
-    //new deliv
+    /*new deliv
     const storedHouse = localStorage.getItem("house");
     const storedStreet = localStorage.getItem("street");
     const storedBarangay = localStorage.getItem("barangay");
     const storedCity = localStorage.getItem("city");
     const storedPostalCode = localStorage.getItem("postalCode");
+    */
 
     //new order details
     const storedCart = JSON.parse(localStorage.getItem("cart"));
