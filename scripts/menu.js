@@ -109,6 +109,6 @@ checkOut.addEventListener('click', ()=>{
     } else {
         localStorage.setItem("cart", JSON.stringify(cart)); //add this for cart
         localStorage.setItem("totalPrice", totalPrice.toFixed(2));
-        window.location.href = "delivery.html";
+        window.location.href = "delivery.php";
     }
 });

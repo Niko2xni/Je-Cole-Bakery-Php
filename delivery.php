@@ -1,3 +1,29 @@
+<?php
+$conn = mysqli_connect("localhost", "root", "", "user_registration");
+
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['payNow'])) {
+    $house = mysqli_real_escape_string($conn, $_POST['houseNumber']);
+    $street = mysqli_real_escape_string($conn, $_POST['street']);
+    $barangay = mysqli_real_escape_string($conn, $_POST['barangay']);
+    $postal = mysqli_real_escape_string($conn, $_POST['postalCode']);
+    $city = mysqli_real_escape_string($conn, $_POST['city']);
+
+    $query = "INSERT INTO users (housenumber, streetname, barangay, postalcode, city) VALUES ('$house', '$street', '$barangay', '$postal', '$city')";
+
+    if (mysqli_query($conn, $query)) {
+        header("Location: receipt.php");
+        exit();
+
+    } else {
+        echo "Error: " . $query . "<br>" . mysqli_error($conn);
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,9 +48,9 @@
     <section id="delivery-info">
         <div class="delivery-container">
             <h2>Billing Information</h2>
-            <form id="delivery">
+            <form id="delivery" action="delivery.php" method="POST">
                 <label for="house">House/Unit No.:</label>
-                <input type="text" id="house" name="house" required>
+                <input type="text" id="house" name="houseNumber" required>
 
                 <label for="street">Street:</label>
                 <input type="text" id="street" name="street" required>
@@ -52,7 +78,7 @@
                     <p id="cartTotal">TOTAL: ₱ 0.00</p>
                 </div>
 
-                <button type="submit" class="pay-btn" id="payNow">PAY NOW</button>
+                <button type="submit" class="pay-btn" id="payNow" name="payNow">PAY NOW</button>
             </form>
         </div>
     </section>

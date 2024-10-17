@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function() {
     payButton.addEventListener('submit', (event) => {
         event.preventDefault();
 
-        //new storing
+        /*new storing
         const house = document.getElementById("house").value;
         const street = document.getElementById("street").value;
         const barangay = document.getElementById("barangay").value;
@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", function() {
         localStorage.setItem("city", city);
         localStorage.setItem("postalCode", postalCode);
         localStorage.setItem("paymentMethod", paymentMethod);
+        */
 
         alert("Thank you for ordering! Your order is now being processed");
         window.location.href = "receipt.php";

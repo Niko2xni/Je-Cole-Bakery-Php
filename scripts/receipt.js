@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     */
 
-    //new deliv details
+    /*new deliv details
     if (storedHouse && storedStreet && storedBarangay && storedCity && storedPostalCode) {
         document.querySelector("#customerInfo tr:nth-child(6) td:nth-child(2)").textContent = storedHouse;
         document.querySelector("#customerInfo tr:nth-child(7) td:nth-child(2)").textContent = storedStreet;
@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelector("#customerInfo tr:nth-child(9) td:nth-child(2)").textContent = storedPostalCode;
         document.querySelector("#customerInfo tr:nth-child(10) td:nth-child(2)").textContent = storedCity;
     }
+        */
 
     //order details
     const orderTable = document.querySelector("#orderInfo");

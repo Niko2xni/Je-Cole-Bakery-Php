@@ -47,7 +47,7 @@ $order_result = mysqli_query($conn, $order_query);
             </tr>
             <tr>
                 <td><b>Contact Number:</b></td>
-                <td><?php echo htmlspecialchars($customer_data['number']); ?></td>
+                <td><?php echo htmlspecialchars($customer_data['contactnumber']); ?></td>
             </tr>
             <tr>
                 <td><b>House Number</b></td>

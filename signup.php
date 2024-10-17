@@ -8,11 +8,11 @@ if (!$conn) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
     $firstname = mysqli_real_escape_string($conn, $_POST['firstname']);
     $lastname = mysqli_real_escape_string($conn, $_POST['lastname']);
-    $number = mysqli_real_escape_string($conn, $_POST['number']);
+    $number = mysqli_real_escape_string($conn, $_POST['contactnumber']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
 
-    $query = "INSERT INTO users (firstname, lastname, number, email, password) VALUES ('$firstname', '$lastname', '$number', '$email', '$password')";
+    $query = "INSERT INTO users (firstname, lastname, contactnumber, email, password) VALUES ('$firstname', '$lastname', '$number', '$email', '$password')";
 
     if (mysqli_query($conn, $query)) {
         header("Location: index.php");
@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
                 </tr>
                 <tr>
                     <td><label for="number"><h4>Phone Number:</h4></label></td>
-                    <td><input type="number" name="number" id="number" required></td>
+                    <td><input type="number" name="contactnumber" id="number" required></td>
                 </tr>
                 <tr>
                     <td><label for="email"><h4>Email Address:</h4></label></td>
