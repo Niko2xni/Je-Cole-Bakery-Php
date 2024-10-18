@@ -10,14 +10,14 @@ if (!$conn) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
 
     $user_id = $_SESSION['user_id'];
-    
+
     $house = mysqli_real_escape_string($conn, $_POST['houseNumber']);
     $street = mysqli_real_escape_string($conn, $_POST['street']);
     $barangay = mysqli_real_escape_string($conn, $_POST['barangay']);
     $postal = mysqli_real_escape_string($conn, $_POST['postalCode']);
     $city = mysqli_real_escape_string($conn, $_POST['city']);
 
-    $query = "INSERT INTO users (housenumber, streetname, barangay, postalcode, city) VALUES ('$house', '$street', '$barangay', '$postal', '$city')";
+    $query = "UPDATE users SET housenumber = '$house', streetname = '$street', barangay = '$barangay', postalcode = '$postal', city = '$city' WHERE customer_id = '$user_id'";
 
     if (mysqli_query($conn, $query)) {
         header("Location: receipt.php");
