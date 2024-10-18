@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 $conn = mysqli_connect("localhost", "root", "", "user_registration");
 
 if (!$conn) {
@@ -6,6 +8,9 @@ if (!$conn) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
+
+    $user_id = $_SESSION['user_id'];
+    
     $house = mysqli_real_escape_string($conn, $_POST['houseNumber']);
     $street = mysqli_real_escape_string($conn, $_POST['street']);
     $barangay = mysqli_real_escape_string($conn, $_POST['barangay']);
@@ -35,12 +40,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
 </head>
 <body>
     <section id="header">
-        <a href="index.html"><img src="images/logoWhite.png" id="logo"></a>
+        <a href="index.php"><img src="images/logoWhite.png" id="logo"></a>
         <nav>
             <ul id="navbar">
-                <li><a href="menu.html">Menu</a></li>
+                <li><a href="index.php">Menu</a></li>
                 <li><a href="aboutus.html">About Us</a></li>
-                <li><a href="index.html">Log in</a></li>
+                <li><a href="login.php">Log in</a></li>
             </ul>
         </nav>
     </section>

@@ -35,11 +35,11 @@ $order_result = mysqli_query($conn, $order_query);
             </tr>
             <tr>
                 <td><b>First Name:</b></td>
-                <td><?php echo htmlspecialchars($customer_data['first_name']); ?></td>
+                <td><?php echo htmlspecialchars($customer_data['firstname']); ?></td>
             </tr>
             <tr>
                 <td><b>Last Name:</b></td>
-                <td><?php echo htmlspecialchars($customer_data['last_name']); ?></td>
+                <td><?php echo htmlspecialchars($customer_data['lastname']); ?></td>
             </tr>
             <tr>
                 <td><b>Email:</b></td>
@@ -51,23 +51,23 @@ $order_result = mysqli_query($conn, $order_query);
             </tr>
             <tr>
                 <td><b>House Number</b></td>
-                <td></td>
+                <td><?php echo htmlspecialchars($customer_data['housenumber']); ?></td>
             </tr>
             <tr>
                 <td><b>Street Name:</b></td>
-                <td></td>
+                <td><?php echo htmlspecialchars($customer_data['streetname']); ?></td>
             </tr>
             <tr>
                 <td><b>Barangay:</b></td>
-                <td></td>
+                <td><?php echo htmlspecialchars($customer_data['barangay']); ?></td>
             </tr>
             <tr>
                 <td><b>Postal code:</b></td>
-                <td></td>
+                <td><?php echo htmlspecialchars($customer_data['postalcode']); ?></td>
             </tr>
             <tr>
                 <td><b>City:</b></td>
-                <td></td>
+                <td><?php echo htmlspecialchars($customer_data['city']); ?></td>
             </tr>
         </table>
 <br>

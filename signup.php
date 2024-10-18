@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 $conn = mysqli_connect("localhost", "root", "", "user_registration");
 
 if (!$conn) {
@@ -15,6 +17,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
     $query = "INSERT INTO users (firstname, lastname, contactnumber, email, password) VALUES ('$firstname', '$lastname', '$number', '$email', '$password')";
 
     if (mysqli_query($conn, $query)) {
+        
+        // Get the user ID of the inserted row
+        $user_id = mysqli_insert_id($conn);
+
+        // Store the user ID in the session
+        $_SESSION['user_id'] = $user_id;
+
         header("Location: index.php");
         exit();
 
