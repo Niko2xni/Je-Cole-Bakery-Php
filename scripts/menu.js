@@ -55,8 +55,9 @@ function loadCart() {
     // Fetch the cart items from the server
     fetch('get-cart.php')
         .then(response => response.json())
-        .then(items => {
-            cart = items; // Update the `cart` array with the items fetched from the server
+        .then(data => {
+
+            cart = data.items; // Update the `cart` array with the items fetched from the server
             
             // Now, update the cart display
             var cartItem = document.getElementById('cartItem');
@@ -65,17 +66,14 @@ function loadCart() {
 
             cartItem.innerHTML = '';
             cartPrice.innerHTML = '';
-
             totalPrice = 0.00;
 
-            items.forEach((item, index) => {
+            data.items.forEach((item, index) => {
                 const addedItems = document.createElement('li');
                 const bills = document.createElement('li');
 
-                addedItems.textContent = item.name;
-                bills.textContent = '₱' + item.price.toFixed(2);
-
-                totalPrice += item.price;
+                addedItems.textContent = `${item.item_name} (x${item.quantity})`;
+                bills.textContent = '₱' + item.item_price.toFixed(2);
 
                 const removeButton = document.createElement('button');
                 removeButton.textContent = 'Remove';
@@ -86,6 +84,8 @@ function loadCart() {
                 addedItems.appendChild(removeButton);
                 cartItem.appendChild(addedItems);
                 cartPrice.appendChild(bills);
+
+                totalPrice += item.item_price * item.quantity;
             });
 
             cartTotal.textContent = '₱' + totalPrice.toFixed(2);
@@ -103,12 +103,36 @@ closeCart.addEventListener('click', ()=>{
     body.classList.remove('active');
 });
 
-checkOut.addEventListener('click', ()=>{
+checkOut.addEventListener('click', () => {
     if (cart.length === 0) {
         alert('You need to add an item first!');
     } else {
-        localStorage.setItem("cart", JSON.stringify(cart)); //add this for cart
-        localStorage.setItem("totalPrice", totalPrice.toFixed(2));
-        window.location.href = "delivery.php";
+        // Store cart and total price in localStorage if needed
+        localStorage.setItem("cart", JSON.stringify(cart)); // Save cart in localStorage
+        localStorage.setItem("totalPrice", totalPrice.toFixed(2)); // Save total price
+
+        // Send the cart data to the server using fetch (AJAX)
+        fetch('checkout.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                cart: cart, // Send the cart items
+                totalPrice: totalPrice // Send the total price
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // If checkout is successful, redirect to the delivery page
+                window.location.href = 'delivery.php';
+            } else {
+                alert('Checkout failed: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error during checkout:', error);
+        });
     }
 });
