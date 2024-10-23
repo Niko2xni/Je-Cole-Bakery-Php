@@ -122,7 +122,12 @@ checkOut.addEventListener('click', () => {
                 totalPrice: totalPrice // Send the total price
             })
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
             if (data.success) {
                 // If checkout is successful, redirect to the delivery page
