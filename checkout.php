@@ -12,15 +12,22 @@ $user_id = $_SESSION['user_id'];
 $query = "INSERT INTO orders (user_id, item_name, item_price, quantity) SELECT user_id, item_name, item_price, quantity FROM cart WHERE user_id = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param('i', $user_id);
-$stmt->execute();
+
+if (!$stmt->execute()) {
+    echo json_encode(['success' => false, 'message' => 'Error moving items to orders: ' . $stmt->error]);
+    exit();
+}
 
 // Clear the cart after checkout
 $clearCartQuery = "DELETE FROM cart WHERE user_id = ?";
 $clearStmt = $conn->prepare($clearCartQuery);
 $clearStmt->bind_param('i', $user_id);
-$clearStmt->execute();
 
-// Redirect to a confirmation page
-header('Location: receipt.php');
-exit();
+if (!$clearStmt->execute()) {
+    echo json_encode(['success' => false, 'message' => 'Error clearing cart: ' . $clearStmt->error]);
+    exit();
+}
+
+// Return success response
+echo json_encode(['success' => true]);
 ?>

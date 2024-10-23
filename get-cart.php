@@ -28,10 +28,10 @@ while ($row = $result->fetch_assoc()) {
     // Make sure each row is an associative array with all fields
     $items[] = [
         'item_name' => $row['item_name'],
-        'item_price' => $row['item_price'],
+        'item_price' => (float)$row['item_price'],
         'quantity' => $row['quantity']
     ];
-    $total_price += $row['item_total'];
+    $total_price += (float)$row['item_total']; // Ensure total is numeric
 }
 
 // Return JSON response
