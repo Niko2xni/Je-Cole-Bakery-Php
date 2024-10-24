@@ -16,10 +16,8 @@ $address_query = "SELECT * FROM receipts WHERE session_id = '$session_id'";
 $address_result = mysqli_query($conn, $address_query);
 $address_data = mysqli_fetch_assoc($address_result);
 
-/* Fetch order details
-$order_query = "SELECT item_name, price FROM orders WHERE order_id = '$order_id'";
+$order_query = "SELECT item_name, item_price FROM orders WHERE session_id = '$session_id'";
 $order_result = mysqli_query($conn, $order_query);
-*/
 ?>
 
 <!DOCTYPE html>
@@ -85,10 +83,20 @@ $order_result = mysqli_query($conn, $order_query);
                 <th>Item</th>
                 <th>Price</th>
             </tr>
-            <tr>
-                <td></td>
-                <td></td>
-            </tr>
+            <?php
+            // Check if there are any orders
+            if (mysqli_num_rows($order_result) > 0) {
+                // Loop through each order and display it
+                while ($order_data = mysqli_fetch_assoc($order_result)) {
+                    echo '<tr>';
+                    echo '<td>' . htmlspecialchars($order_data['item_name']) . '</td>';
+                    echo '<td>₱' . number_format($order_data['item_price'], 2) . '</td>';
+                    echo '</tr>';
+                }
+            } else {
+                echo '<tr><td colspan="2">No order details found.</td></tr>';
+            }
+            ?>
             <tr>
                 <td><h3>Total Price: </h3></td>
                 <td><?php echo htmlspecialchars($address_data['total_price']); ?></td>
@@ -96,6 +104,6 @@ $order_result = mysqli_query($conn, $order_query);
         </table>
     </section>
     
-    <script src="scripts/receipt.js"></script>
+
 </body>
 </html>
