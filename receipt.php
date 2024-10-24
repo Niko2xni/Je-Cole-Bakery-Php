@@ -1,14 +1,20 @@
 <?php
-// Connect to the database
+session_start();
 $conn = mysqli_connect("localhost", "root", "", "user_registration");
 
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-$customer_query = "SELECT * FROM users ORDER BY customer_id DESC LIMIT 1";
+$email = $_SESSION['email'];
+$customer_query = "SELECT * FROM users WHERE email = '$email'";
 $customer_result = mysqli_query($conn, $customer_query);
 $customer_data = mysqli_fetch_assoc($customer_result);
+
+$session_id = $_SESSION['session_id'];
+$address_query = "SELECT * FROM receipts WHERE session_id = '$session_id'";
+$address_result = mysqli_query($conn, $address_query);
+$address_data = mysqli_fetch_assoc($address_result);
 
 /* Fetch order details
 $order_query = "SELECT item_name, price FROM orders WHERE order_id = '$order_id'";
@@ -51,23 +57,23 @@ $order_result = mysqli_query($conn, $order_query);
             </tr>
             <tr>
                 <td><b>House Number</b></td>
-                <td><?php echo htmlspecialchars($customer_data['housenumber']); ?></td>
+                <td><?php echo htmlspecialchars($address_data['housenumber']); ?></td>
             </tr>
             <tr>
                 <td><b>Street Name:</b></td>
-                <td><?php echo htmlspecialchars($customer_data['streetname']); ?></td>
+                <td><?php echo htmlspecialchars($address_data['streetname']); ?></td>
             </tr>
             <tr>
                 <td><b>Barangay:</b></td>
-                <td><?php echo htmlspecialchars($customer_data['barangay']); ?></td>
+                <td><?php echo htmlspecialchars($address_data['barangay']); ?></td>
             </tr>
             <tr>
                 <td><b>Postal code:</b></td>
-                <td><?php echo htmlspecialchars($customer_data['postalcode']); ?></td>
+                <td><?php echo htmlspecialchars($address_data['postalcode']); ?></td>
             </tr>
             <tr>
                 <td><b>City:</b></td>
-                <td><?php echo htmlspecialchars($customer_data['city']); ?></td>
+                <td><?php echo htmlspecialchars($address_data['city']); ?></td>
             </tr>
         </table>
 <br>
@@ -85,7 +91,7 @@ $order_result = mysqli_query($conn, $order_query);
             </tr>
             <tr>
                 <td><h3>Total Price: </h3></td>
-                <td></td>
+                <td><?php echo htmlspecialchars($address_data['total_price']); ?></td>
             </tr>
         </table>
     </section>

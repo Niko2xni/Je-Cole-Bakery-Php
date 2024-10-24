@@ -9,6 +9,8 @@ if (!$conn) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
 
     $user_id = $_SESSION['user_id'];
+    $session_id = $_SESSION['session_id'];
+    $total_price = $_SESSION['total_price'];
 
     $order_date = date('Y-m-d H:i:s');
     $house = mysqli_real_escape_string($conn, $_POST['houseNumber']);
@@ -17,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
     $postal = mysqli_real_escape_string($conn, $_POST['postalCode']);
     $city = mysqli_real_escape_string($conn, $_POST['city']);
 
-    $query = "INSERT INTO receipts (user_id, order_date, housenumber, streetname, barangay, postalcode, city) VALUES ('$user_id', '$order_date', '$house', '$street', '$barangay', '$postal', '$city')";
+    $query = "INSERT INTO receipts (user_id, session_id, order_date, total_price, housenumber, streetname, barangay, postalcode, city) VALUES ('$user_id', '$session_id', '$order_date', '$total_price', '$house', '$street', '$barangay', '$postal', '$city')";
 
     if (mysqli_query($conn, $query)) {
         header("Location: receipt.php");

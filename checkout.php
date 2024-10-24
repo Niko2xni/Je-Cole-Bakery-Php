@@ -7,9 +7,10 @@ if (!$conn) {
 
 // Assume $user_id is retrieved from the session
 $user_id = $_SESSION['user_id'];
+$session_id = $_SESSION['session_id'];
 
 // Move cart items to an orders table
-$query = "INSERT INTO orders (user_id, item_name, item_price) SELECT user_id, item_name, item_price FROM cart WHERE user_id = ?";
+$query = "INSERT INTO orders (user_id, session_id, item_name, item_price) SELECT user_id, session_id, item_name, item_price FROM cart WHERE user_id = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param('s', $user_id);
 

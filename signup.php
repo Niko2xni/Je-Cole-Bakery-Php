@@ -43,6 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
         if (mysqli_query($conn, $query)) {
             $_SESSION['user_id'] = "$firstname $lastname";
             $_SESSION['email'] = $email;
+            $_SESSION['session_id'] = session_id();
 
             $signup_successful = true;
         } else {
