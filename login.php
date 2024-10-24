@@ -23,7 +23,6 @@ if (isset($_POST['login'])) {
             $login_successful = true; 
             $_SESSION['user_id'] = $user['firstname'] . ' ' . $user['lastname'];
             $_SESSION['email'] = $email;
-            $_SESSION['session_id'] = session_id();
         } else {
             $error_message = "Incorrect Username or Password!"; 
         }

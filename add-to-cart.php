@@ -16,13 +16,12 @@ $data = json_decode(file_get_contents("php://input"), true);
 if (isset($data['name']) && isset($data['price'])) {
 
     $user_id = $_SESSION['user_id']; 
-    $session_id = $_SESSION['session_id'];
     $item_name = $data['name'];
     $item_price = $data['price'];
 
-    $query = "INSERT INTO cart (user_id, session_id, item_name, item_price) VALUES (?, ?, ?, ?)";
+    $query = "INSERT INTO cart (user_id, item_name, item_price) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param('sssd', $user_id, $session_id, $item_name, $item_price); // 'isd' - integer, string, decimal
+    $stmt->bind_param('ssd', $user_id, $item_name, $item_price); // 'isd' - integer, string, decimal
 
     if ($stmt->execute()) {
         echo json_encode(['message' => 'Item added to cart']);
