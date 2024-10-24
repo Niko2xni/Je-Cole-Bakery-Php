@@ -72,7 +72,7 @@ function loadCart() {
                 const addedItems = document.createElement('li');
                 const bills = document.createElement('li');
 
-                addedItems.textContent = `${item.item_name} (x${item.quantity})`;
+                addedItems.textContent = `${item.item_name}`;
                 bills.textContent = '₱' + item.item_price.toFixed(2);
 
                 const removeButton = document.createElement('button');
@@ -85,7 +85,7 @@ function loadCart() {
                 cartItem.appendChild(addedItems);
                 cartPrice.appendChild(bills);
 
-                totalPrice += item.item_price * item.quantity;
+                totalPrice += item.item_price;
             });
 
             cartTotal.textContent = '₱' + totalPrice.toFixed(2);
@@ -107,10 +107,6 @@ checkOut.addEventListener('click', () => {
     if (cart.length === 0) {
         alert('You need to add an item first!');
     } else {
-        // Store cart and total price in localStorage if needed
-        localStorage.setItem("cart", JSON.stringify(cart)); // Save cart in localStorage
-        localStorage.setItem("totalPrice", totalPrice.toFixed(2)); // Save total price
-
         // Send the cart data to the server using fetch (AJAX)
         fetch('checkout.php', {
             method: 'POST',

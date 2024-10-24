@@ -19,7 +19,7 @@ if (isset($data['name']) && isset($data['price'])) {
     $item_name = $data['name'];
     $item_price = $data['price'];
 
-    $query = "INSERT INTO cart (user_id, item_name, item_price, quantity) VALUES (?, ?, ?, 1)";
+    $query = "INSERT INTO cart (user_id, item_name, item_price) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($query);
     $stmt->bind_param('ssd', $user_id, $item_name, $item_price); // 'isd' - integer, string, decimal
 

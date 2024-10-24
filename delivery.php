@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
                 </select>
 
                 <div class="total-container">
-                    <p id="cartTotal">TOTAL: ₱ 0.00</p>
+                    <p id="cartTotal">TOTAL: ₱<?php echo htmlspecialchars($_SESSION['total_price']); ?></p>
                 </div>
 
                 <button type="submit" class="pay-btn" id="payNow" name="payNow">PAY NOW</button>
