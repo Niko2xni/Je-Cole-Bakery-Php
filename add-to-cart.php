@@ -21,7 +21,7 @@ if (isset($data['name']) && isset($data['price'])) {
 
     $query = "INSERT INTO cart (user_id, item_name, item_price, quantity) VALUES (?, ?, ?, 1)";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param('isd', $user_id, $item_name, $item_price); // 'isd' - integer, string, decimal
+    $stmt->bind_param('ssd', $user_id, $item_name, $item_price); // 'isd' - integer, string, decimal
 
     if ($stmt->execute()) {
         echo json_encode(['message' => 'Item added to cart']);

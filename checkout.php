@@ -11,7 +11,7 @@ $user_id = $_SESSION['user_id'];
 // Move cart items to an orders table
 $query = "INSERT INTO orders (user_id, item_name, item_price, quantity) SELECT user_id, item_name, item_price, quantity FROM cart WHERE user_id = ?";
 $stmt = $conn->prepare($query);
-$stmt->bind_param('i', $user_id);
+$stmt->bind_param('s', $user_id);
 
 if (!$stmt->execute()) {
     echo json_encode(['success' => false, 'message' => 'Error moving items to orders: ' . $stmt->error]);
@@ -21,7 +21,7 @@ if (!$stmt->execute()) {
 // Clear the cart after checkout
 $clearCartQuery = "DELETE FROM cart WHERE user_id = ?";
 $clearStmt = $conn->prepare($clearCartQuery);
-$clearStmt->bind_param('i', $user_id);
+$clearStmt->bind_param('s', $user_id);
 
 if (!$clearStmt->execute()) {
     echo json_encode(['success' => false, 'message' => 'Error clearing cart: ' . $clearStmt->error]);

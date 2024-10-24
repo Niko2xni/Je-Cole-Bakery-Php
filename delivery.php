@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 $conn = mysqli_connect("localhost", "root", "", "user_registration");
 
 if (!$conn) {
@@ -11,13 +10,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
 
     $user_id = $_SESSION['user_id'];
 
+    $order_date = date('Y-m-d H:i:s');
     $house = mysqli_real_escape_string($conn, $_POST['houseNumber']);
     $street = mysqli_real_escape_string($conn, $_POST['street']);
     $barangay = mysqli_real_escape_string($conn, $_POST['barangay']);
     $postal = mysqli_real_escape_string($conn, $_POST['postalCode']);
     $city = mysqli_real_escape_string($conn, $_POST['city']);
 
-    $query = "UPDATE users SET housenumber = '$house', streetname = '$street', barangay = '$barangay', postalcode = '$postal', city = '$city' WHERE customer_id = '$user_id'";
+    $query = "INSERT INTO receipts (user_id, order_date, housenumber, streetname, barangay, postalcode, city) VALUES ('$user_id', '$order_date', '$house', '$street', '$barangay', '$postal', '$city')";
 
     if (mysqli_query($conn, $query)) {
         header("Location: receipt.php");
@@ -88,7 +88,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
             </form>
         </div>
     </section>
-
-
 </body>
 </html>

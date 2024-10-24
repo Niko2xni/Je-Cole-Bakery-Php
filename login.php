@@ -18,8 +18,11 @@ if (isset($_POST['login'])) {
     
     if ($result && mysqli_num_rows($result) > 0) {
         $user = mysqli_fetch_assoc($result);
+
         if (password_verify($password, $user['password'])) {
             $login_successful = true; 
+            $_SESSION['user_id'] = $user['firstname'] . ' ' . $user['lastname'];
+            $_SESSION['email'] = $email;
         } else {
             $error_message = "Incorrect Username or Password!"; 
         }

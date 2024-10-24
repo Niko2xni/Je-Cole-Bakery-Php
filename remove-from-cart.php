@@ -1,22 +1,20 @@
 <?php
 session_start();
 $conn = mysqli_connect("localhost", "root", "", "user_registration");
+
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-// Get the raw POST data from the request
 $data = json_decode(file_get_contents("php://input"), true);
 
-// Check if an index was provided
 if (isset($data['index'])) {
     $user_id = $_SESSION['user_id'];
     $index = $data['index'];
 
-    // First, retrieve the item from the cart to get its ID or other details
     $query = "SELECT id FROM cart WHERE user_id = ? LIMIT 1 OFFSET ?";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param('ii', $user_id, $index);
+    $stmt->bind_param('si', $user_id, $index);
     $stmt->execute();
     $result = $stmt->get_result();
 
