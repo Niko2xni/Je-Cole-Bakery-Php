@@ -1,5 +1,7 @@
 <?php
+session_start();
 $conn = mysqli_connect("localhost", "root", "", "user_registration");
+
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
@@ -64,14 +66,14 @@ if (isset($_POST['login'])) {
             <h1>Log in</h1>
             <p>New user? <a href="signup.php">Sign up</a> instead</p>
 
-            <form id="login" method="POST" action="">
-                <input type="hidden" name="login" value="1">
+            <form id="login" method="POST" action="login.php">
+                
                 <label for="email"><h4>Email:</h4></label>
                 <input type="email" name="email" id="email" required>
                 <br><br><br>
                 <label for="password"><h4>Password:</h4></label>
                 <input type="password" name="password" id="password" required>
-                <button type="submit" id="submit"><h3>Log in</h3></button>
+                <button type="submit" name="login" id="submit"><h3>Log in</h3></button>
             </form>
         </div>
     </section>

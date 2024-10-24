@@ -1,11 +1,13 @@
 <?php
 session_start();
-
 $conn = mysqli_connect("localhost", "root", "", "user_registration");
 
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
+
+$signup_successful = false; 
+$error_message = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
     $firstname = mysqli_real_escape_string($conn, $_POST['firstname']);
@@ -13,22 +15,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
     $number = mysqli_real_escape_string($conn, $_POST['contactnumber']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
+    $pass = $_POST['password'];
+    $confirmpass = $_POST['confirmpassword'];
 
-    $query = "INSERT INTO users (firstname, lastname, contactnumber, email, password) VALUES ('$firstname', '$lastname', '$number', '$email', '$password')";
+    $checkNumberQuery = "SELECT * FROM users WHERE contactnumber='$number'";
+    $numresult = mysqli_query($conn, $checkNumberQuery);
 
-    if (mysqli_query($conn, $query)) {
-        
-        // Get the user ID of the inserted row
-        $user_id = mysqli_insert_id($conn);
+    if (mysqli_num_rows($numresult) > 0) {
+        $error_message .= "Error: Contact number already registered. Please use a different number.";
+    }
 
-        // Store the user ID in the session
-        $_SESSION['user_id'] = $user_id;
+    $checkEmailQuery = "SELECT * FROM users WHERE email='$email'";
+    $passresult = mysqli_query($conn, $checkEmailQuery);
 
-        header("Location: index.php");
-        exit();
+    if (mysqli_num_rows($passresult) > 0) {
+        $error_message .= "Error: Email already registered. Please use a different email.";
+    }
 
-    } else {
-        echo "Error: " . $query . "<br>" . mysqli_error($conn);
+    if ($pass !== $confirmpass) {
+        $error_message .= "Error: Passwords do not match. Please enter matching passwords.";
+    }
+
+    if (empty($error_message)) {
+        $query = "INSERT INTO users (firstname, lastname, contactnumber, email, password) VALUES ('$firstname', '$lastname', '$number', '$email', '$password')";
+
+        if (mysqli_query($conn, $query)) {
+            $user_id = mysqli_insert_id($conn);
+            $_SESSION['user_id'] = $user_id;
+
+            $signup_successful = true;
+        } else {
+            echo "Error: " . $query . "<br>" . mysqli_error($conn);
+        }
     }
 }
 ?>
@@ -41,6 +59,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
     <title>Sign Up</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="images/tab.png">
+    <script>
+        window.onload = function() {
+            <?php if ($signup_successful): ?>
+                alert("Signup successful!");
+                window.location.href = "index.php"; 
+            <?php elseif ($error_message): ?>
+                alert("<?php echo addslashes($error_message); ?>"); 
+            <?php endif; ?>
+        }
+    </script>
 </head>
 <body>
 <section id="header">
@@ -56,10 +84,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
     <section>
     <div class="container">
         <h1>Sign Up</h1>
-        <p>Already have an account? <a href="index.html">Log in</a> instead</p>
+        <p>Already have an account? <a href="login.php">Log in</a> instead</p>
 
         <form id="signup" action="signup.php" method="POST">
-            <input type="hidden" name="register" value="1">
             <table>
                 <tr>
                     <td><label for="Fname"><h4>First Name:</h4></label></td>
@@ -83,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
                 </tr>
                 <tr>
                     <td><label for="pass2"><h4>Confirm Password:</h4></label></td>
-                    <td><input type="password" id="pass2" required></td>
+                    <td><input type="password" name="confirmpassword" id="pass2" required></td>
                 </tr>
             </table>
             
