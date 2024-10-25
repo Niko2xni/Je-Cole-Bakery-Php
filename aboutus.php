@@ -1,3 +1,11 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['is_logged_in'])) {
+    $_SESSION['is_logged_in'] = false;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,9 +20,14 @@
     <section id="header">
         <a href="index.php"><img src="images/logoWhite.png" id="logo"></a>
             <ul id="navbar">
-                <li><a href="login.php">Log in</a></li>
                 <li><a href="index.php">Menu</a></li>
-                <li><a class="active" href="aboutus.html">About Us</a></li>
+                <li><a class="active" href="aboutus.php">About Us</a></li>
+                <?php if ($_SESSION['is_logged_in']): ?>
+                    <li>Welcome, <?php echo htmlspecialchars($_SESSION['user_id']); ?></li>
+                    <li><a href="logout.php">Log out</a></li>
+                <?php else: ?>
+                    <li><a href="login.php">Log in</a></li>
+                <?php endif; ?>
             </ul>
     </section>
     <video autoplay loop muted plays-inline>

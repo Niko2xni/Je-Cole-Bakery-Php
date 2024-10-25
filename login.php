@@ -23,6 +23,7 @@ if (isset($_POST['login'])) {
             $login_successful = true; 
             $_SESSION['user_id'] = $user['firstname'] . ' ' . $user['lastname'];
             $_SESSION['email'] = $email;
+            $_SESSION['is_logged_in'] = isset($_SESSION['user_id']);
         } else {
             $error_message = "Incorrect Username or Password!"; 
         }
@@ -58,9 +59,14 @@ if (isset($_POST['login'])) {
         <a href="index.php"><img src="images/logoWhite.png" id="logo"></a>
         <nav>
             <ul id="navbar">
-                <li><a class="active" href="login.php">Log in</a></li>
                 <li><a href="index.php">Menu</a></li>
-                <li><a href="aboutus.html">About Us</a></li>
+                <li><a href="aboutus.php">About Us</a></li>
+                <?php if ($_SESSION['is_logged_in']): ?>
+                    <li>Welcome, <?php echo htmlspecialchars($_SESSION['user_id']); ?></li>
+                    <li><a href="logout.php">Log out</a></li>
+                <?php else: ?>
+                    <li><a class="active" href="login.php">Log in</a></li>
+                <?php endif; ?>
             </ul>
         </nav>
     </section>

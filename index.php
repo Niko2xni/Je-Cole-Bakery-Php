@@ -1,3 +1,11 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['is_logged_in'])) {
+    $_SESSION['is_logged_in'] = false;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,10 +21,15 @@
         <a href="index.php"><img src="images/logoWhite.png" id="logo"></a>
         <nav>
             <ul id="navbar">
-                <li><a href="login.php">Log in</a></li>
                 <li><a class="active" href="index.php">Menu</a></li>
-                <li><a href="aboutus.html">About Us</a></li>
+                <li><a href="aboutus.php">About Us</a></li>
                 <li><a href="#" id="openCart">Cart</a></li>
+                <?php if ($_SESSION['is_logged_in']): ?>
+                    <li>Welcome, <?php echo htmlspecialchars($_SESSION['user_id']); ?></li>
+                    <li><a href="logout.php">Log out</a></li>
+                <?php else: ?>
+                    <li><a href="login.php">Log in</a></li>
+                <?php endif; ?>
             </ul>
         </nav>
     </section>

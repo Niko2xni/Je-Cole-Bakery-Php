@@ -51,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
         if (mysqli_query($conn, $query)) {
             $_SESSION['user_id'] = "$firstname $lastname";
             $_SESSION['email'] = $email;
+            $_SESSION['is_logged_in'] = isset($_SESSION['user_id']);
 
             $signup_successful = true;
         } else {
@@ -73,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
             <?php if ($signup_successful): ?>
                 alert("Signup successful!");
                 window.location.href = "index.php"; 
-            <?php elseif ($error_message): ?>
+            <?php elseif ($_SESSION['is_logged_in']): ?>
                 alert("<?php echo addslashes(str_replace("\n", '\\n', $error_message)); ?>");
             <?php endif; ?>
         }
@@ -84,9 +85,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
         <a href="index.php"><img src="images/logoWhite.png" id="logo"></a>
         <nav>
             <ul id="navbar">
-                <li><a class="active" href="login.php">Log in</a></li>
                 <li><a href="index.php">Menu</a></li>
                 <li><a href="aboutus.html">About Us</a></li>
+                <?php if ($_SESSION['is_logged_in']): ?>
+                    <li>Welcome, <?php echo htmlspecialchars($_SESSION['user_id']); ?></li>
+                    <li><a href="logout.php">Log out</a></li>
+                <?php else: ?>
+                    <li><a class="active" href="login.php">Log in</a></li>
+                <?php endif; ?>
             </ul>
         </nav>
     </section>
