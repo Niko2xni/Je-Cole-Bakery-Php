@@ -26,7 +26,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
     }
 
     if (!preg_match('/^\d{11}$/', $number)) {
-        $error_message .= "Error: Phone number must be exactly 11 digits.\n";
+        $error_message .= "Error: Phone number must be exactly 11 digits.";
+    }
+
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error_message .= "Error: Invalid email format.";
     }
 
     $checkEmailQuery = "SELECT * FROM users WHERE email='$email'";
