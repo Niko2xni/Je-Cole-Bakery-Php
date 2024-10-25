@@ -22,18 +22,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
     $numresult = mysqli_query($conn, $checkNumberQuery);
 
     if (mysqli_num_rows($numresult) > 0) {
-        $error_message .= "Error: Contact number already registered. Please use a different number.";
+        $error_message .= "Error: Contact number already registered. Please use a different number.\n";
+    }
+
+    if (!preg_match('/^\d{11}$/', $number)) {
+        $error_message .= "Error: Phone number must be exactly 11 digits.\n";
     }
 
     $checkEmailQuery = "SELECT * FROM users WHERE email='$email'";
     $passresult = mysqli_query($conn, $checkEmailQuery);
 
     if (mysqli_num_rows($passresult) > 0) {
-        $error_message .= "Error: Email already registered. Please use a different email.";
+        $error_message .= "Error: Email already registered. Please use a different email.\n";
     }
 
     if ($pass !== $confirmpass) {
-        $error_message .= "Error: Passwords do not match. Please enter matching passwords.";
+        $error_message .= "Error: Passwords do not match. Please enter matching passwords.\n";
     }
 
     if (empty($error_message)) {
@@ -66,13 +70,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
                 alert("Signup successful!");
                 window.location.href = "index.php"; 
             <?php elseif ($error_message): ?>
-                alert("<?php echo addslashes($error_message); ?>"); 
+                alert("<?php echo addslashes(str_replace("\n", '\\n', $error_message)); ?>");
             <?php endif; ?>
         }
     </script>
 </head>
 <body>
-<section id="header">
+    <section id="header">
         <a href="index.php"><img src="images/logoWhite.png" id="logo"></a>
         <nav>
             <ul id="navbar">
@@ -99,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
                 </tr>
                 <tr>
                     <td><label for="number"><h4>Phone Number:</h4></label></td>
-                    <td><input type="number" name="contactnumber" id="number" required></td>
+                    <td><input type="number" name="contactnumber" id="number" maxlength="11" title="Please enter exactly 11 digits." required></td>
                 </tr>
                 <tr>
                     <td><label for="email"><h4>Email Address:</h4></label></td>

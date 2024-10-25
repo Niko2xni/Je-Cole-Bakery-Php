@@ -37,7 +37,7 @@ video {
 .slider .list .item .content .title,
 .slider .list .item .content .type {
     font-style: italic;
-    font-size: 8em; /**/
+    font-size: 5em; /**/
     font-weight: bold;
     line-height: 1.3em;
 }
@@ -163,7 +163,7 @@ padding: 15px;
 border-radius: 8px;
 transition: background-color 0.3s ease-in-out;
 max-width: 50%;
-font-size: 1.5em; /**/
+font-size: 1em; /**/
 }
 
 .description:hover {

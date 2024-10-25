@@ -45,7 +45,7 @@ if (isset($_POST['login'])) {
     <script>
         window.onload = function() {
             <?php if ($login_successful): ?>
-                alert("Login successfully submitted!");
+                alert("Login successful!");
                 window.location.href = "index.php"; 
             <?php elseif ($error_message): ?>
                 alert("<?php echo addslashes($error_message); ?>"); 
