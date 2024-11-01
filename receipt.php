@@ -36,19 +36,19 @@ $order_result = mysqli_query($conn, $order_query);
     <link rel ="stylesheet" href="styles.css">
     <link rel="icon" href="images/tab.png">
     <style>
-        h1, h2{
+        h1, h2 {
             text-align: center;
             font-size: 30px;
         }
 
-        table{
+        table {
             background-color: white;
             height:250px;
             width: 500px;
             margin: 0 auto;
         }
 
-        td,th{
+        td, th {
             padding: 15px;
         }
     </style>
@@ -79,11 +79,7 @@ $order_result = mysqli_query($conn, $order_query);
     </nav>
 
     <section>
-<<<<<<< Updated upstream
-        <a href="index.php"><img src="images/logo.png" id="logo"></a>
-=======
         <br>
->>>>>>> Stashed changes
         <h1>Online Receipt</h1>
         <table id="customerInfo">
             <tr>
