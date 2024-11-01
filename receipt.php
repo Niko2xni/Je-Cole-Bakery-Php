@@ -31,7 +31,7 @@ $order_result = mysqli_query($conn, $order_query);
 </head>
 <body>
     <section>
-        <a href="menu.html"><img src="images/logo.png" id="logo"></a>
+        <a href="index.php"><img src="images/logo.png" id="logo"></a>
         <h1>Online Receipt</h1>
         <table id="customerInfo">
             <tr>
