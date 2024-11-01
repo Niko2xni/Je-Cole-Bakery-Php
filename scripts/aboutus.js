@@ -14,6 +14,7 @@ nextBtn.onclick = function() {
 prevBtn.onclick = function() {
     moveSlider('prev');
 }
+
 function moveSlider(direction) {
     let sliderItems = sliderList.querySelectorAll('.item');
     let thumbnailItems = thumbnail.querySelectorAll('.item');
@@ -22,6 +23,7 @@ function moveSlider(direction) {
     sliderItems.forEach(item => item.style.display = 'none');
 
     if(direction === 'next'){
+
         sliderList.appendChild(sliderItems[0]); // Move the first item to the end
         slider.classList.add('next');
         
@@ -29,11 +31,13 @@ function moveSlider(direction) {
         thumbnail.appendChild(thumbnailItems[0]);
 
     } else {
+
         sliderList.prepend(sliderItems[sliderItems.length - 1]); // Move the last item to the front
         slider.classList.add('prev');
 
         // Move the last thumbnail to the front (without hiding them)
         thumbnail.prepend(thumbnailItems[thumbnailItems.length - 1]);
+        
     }
 
     // Show the first slider item after moving
