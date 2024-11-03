@@ -8,9 +8,7 @@ var totalPrice = 0.00;
 
 document.addEventListener('DOMContentLoaded', loadCart);
 
-// Function to add item to cart
 function addToCart(name, price, quantity) {
-    // Check if quantity is a valid number
     quantity = parseInt(quantity);
     if (isNaN(quantity) || quantity <= 0) {
         alert("Please enter a valid quantity.");
@@ -26,8 +24,12 @@ function addToCart(name, price, quantity) {
     })
     .then(response => response.json())
     .then(data => {
-        alert(data.message);
-        loadCart();
+        if (data.exists) {
+            alert(data.message);
+        } else {
+            alert(data.message);
+            loadCart();
+        }
     })
     .catch(error => console.error('Error adding item to cart:', error));
 }

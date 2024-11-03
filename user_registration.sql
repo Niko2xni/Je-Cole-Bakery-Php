@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 24, 2024 at 06:40 PM
+-- Generation Time: Nov 03, 2024 at 05:47 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -31,8 +31,18 @@ CREATE TABLE `cart` (
   `id` int(11) NOT NULL,
   `user_id` varchar(55) NOT NULL,
   `item_name` varchar(255) NOT NULL,
-  `item_price` decimal(10,2) NOT NULL
+  `item_price` decimal(10,2) NOT NULL,
+  `item_quantity` int(11) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `cart`
+--
+
+INSERT INTO `cart` (`id`, `user_id`, `item_name`, `item_price`, `item_quantity`) VALUES
+(193, 'Test Admin', 'Paris-Brest', 129.00, 2),
+(194, 'Test Admin', 'Medium Baguette', 89.00, 1),
+(195, 'Test Admin', 'Classic Croissant', 40.00, 3);
 
 -- --------------------------------------------------------
 
@@ -45,18 +55,18 @@ CREATE TABLE `orders` (
   `user_id` varchar(55) NOT NULL,
   `session_id` varchar(64) NOT NULL,
   `item_name` varchar(55) NOT NULL,
-  `item_price` decimal(10,2) NOT NULL
+  `item_price` decimal(10,2) NOT NULL,
+  `item_quantity` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `user_id`, `session_id`, `item_name`, `item_price`) VALUES
-(94, 'Test Admin', 'jbq630v0hujj8jj6ugl7uet7m2', 'Classic Croissant', 40.00),
-(95, 'Test Admin', 'jbq630v0hujj8jj6ugl7uet7m2', 'Medium Baguette', 89.00),
-(97, 'Test Admin', 'jdpqvecefal4sa78eht6bdrib8', 'Paris-Brest', 129.00),
-(98, 'Test Admin', 'jdpqvecefal4sa78eht6bdrib8', 'Eclair', 25.00);
+INSERT INTO `orders` (`id`, `user_id`, `session_id`, `item_name`, `item_price`, `item_quantity`) VALUES
+(124, 'Test Admin', 'jet3sce5hquuqr87euh3t56214', 'Paris-Brest', 129.00, 2),
+(125, 'Test Admin', 'jet3sce5hquuqr87euh3t56214', 'Medium Baguette', 89.00, 1),
+(126, 'Test Admin', 'jet3sce5hquuqr87euh3t56214', 'Classic Croissant', 40.00, 3);
 
 -- --------------------------------------------------------
 
@@ -82,8 +92,7 @@ CREATE TABLE `receipts` (
 --
 
 INSERT INTO `receipts` (`id`, `user_id`, `session_id`, `order_date`, `total_price`, `housenumber`, `streetname`, `barangay`, `postalcode`, `city`) VALUES
-(13, 'Test Admin', 'jbq630v0hujj8jj6ugl7uet7m2', '2024-10-24 18:34:22', 129, 'a', 'a', 'a', '1', 'a'),
-(14, 'Test Admin', 'jdpqvecefal4sa78eht6bdrib8', '2024-10-24 18:35:19', 154, 'b', 'b', 'b', '2', 'b');
+(20, 'Test Admin', 'jet3sce5hquuqr87euh3t56214', '2024-11-03 04:31:44', 467, '16', 'Doroteo', 'Tanod', '1234', 'Manila');
 
 -- --------------------------------------------------------
 
@@ -144,25 +153,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=163;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=196;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
 
 --
 -- AUTO_INCREMENT for table `receipts`
 --
 ALTER TABLE `receipts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

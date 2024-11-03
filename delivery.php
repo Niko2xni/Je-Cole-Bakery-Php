@@ -156,9 +156,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
                 <label for="paymentMethod">Payment Method:</label>
                 <select id="paymentMethod" name="paymentMethod" required>
                     <option value="" disabled selected>Select a payment method</option>
-                    <option value="Gcash">Gcash</option>
-                    <option value="PayMaya">PayMaya</option>
-                    <option value="BDO">BDO</option>
                     <option value="Cash on delivery">Cash on delivery</option>
                 </select>
 

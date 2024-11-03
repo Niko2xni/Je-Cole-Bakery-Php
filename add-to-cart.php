@@ -28,16 +28,9 @@ if (isset($data['name']) && isset($data['price']) && isset($data['quantity'])) {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        // Update the quantity if the item already exists in the cart
-        $row = $result->fetch_assoc();
-        $item_id = $row['id'];
-
-        $updateQuery = "UPDATE cart SET item_price = ?, quantity = quantity + ? WHERE id = ?";
-        $updateStmt = $conn->prepare($updateQuery);
-        $updateStmt->bind_param('dii', $item_price, $item_quantity, $item_id);
-        $updateStmt->execute();
+        echo json_encode(['message' => 'Item is already in the cart', 'exists' => true]);
+        exit();
     } else {
-        // Insert new item into the cart
         $query = "INSERT INTO cart (user_id, item_name, item_price, item_quantity) VALUES (?, ?, ?, ?)";
         $stmt = $conn->prepare($query);
         $stmt->bind_param('ssdi', $user_id, $item_name, $item_price, $item_quantity); // 'ssdi' - string, string, double, integer
