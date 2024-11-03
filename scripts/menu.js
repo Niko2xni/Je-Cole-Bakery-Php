@@ -9,8 +9,15 @@ var totalPrice = 0.00;
 document.addEventListener('DOMContentLoaded', loadCart);
 
 // Function to add item to cart
-function addToCart(name, price) {
-    const item = { name: name, price: price };
+function addToCart(name, price, quantity) {
+    // Check if quantity is a valid number
+    quantity = parseInt(quantity);
+    if (isNaN(quantity) || quantity <= 0) {
+        alert("Please enter a valid quantity.");
+        return;
+    }
+
+    const item = { name: name, price: price, quantity: quantity };
 
     fetch('add-to-cart.php', {
         method: 'POST',
@@ -60,20 +67,39 @@ function updateCart() {
     cartItemsElement.innerHTML = '';
 
     cart.forEach((item, index) => {
+        const itemPrice = parseFloat(item.item_price) || 0;
+        const itemQuantity = parseInt(item.item_quantity) || 0;
+        const itemTotal = itemPrice * itemQuantity;
+
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${item.item_name}</td>
-            <td>₱ ${item.item_price.toFixed(2)}</td>
+            <td>${item.item_name} (x${itemQuantity})</td>
+            <td>₱ ${itemTotal.toFixed(2)}</td>
             <td><button onclick="removeFromCart(${index})">X</button></td>
         `;
         cartItemsElement.appendChild(row);
-        total += item.item_price;
+        total += itemTotal;
     });
 
     cartTotalElement.textContent = `₱ ${total.toFixed(2)}`;
 }
 
-// Event listeners for opening and closing cart
+function increment() {
+    const quantityInput = event.target.parentElement.querySelector('.product_quantity');
+
+    let currentQuantity = parseInt(quantityInput.value);
+    quantityInput.value = currentQuantity + 1;
+}
+
+function decrement() {
+    const quantityInput = event.target.parentElement.querySelector('.product_quantity');
+
+    let currentQuantity = parseInt(quantityInput.value);
+    if (currentQuantity > 1) {
+        quantityInput.value = currentQuantity - 1;
+    }
+}
+
 openCartBtn.addEventListener('click', () => {
     cartElement.classList.add('open');
 });
@@ -82,7 +108,6 @@ closeCartBtn.addEventListener('click', () => {
     cartElement.classList.remove('open');
 });
 
-// Checkout function
 checkOut.addEventListener('click', () => {
     if (cart.length === 0) {
         alert('You need to add an item first!');

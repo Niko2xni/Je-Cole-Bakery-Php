@@ -21,7 +21,7 @@ $address_query = "SELECT * FROM receipts WHERE session_id = '$session_id'";
 $address_result = mysqli_query($conn, $address_query);
 $address_data = mysqli_fetch_assoc($address_result);
 
-$order_query = "SELECT item_name, item_price FROM orders WHERE session_id = '$session_id'";
+$order_query = "SELECT item_name, item_price, item_quantity FROM orders WHERE session_id = '$session_id'";
 $order_result = mysqli_query($conn, $order_query);
 ?>
 
@@ -125,29 +125,37 @@ $order_result = mysqli_query($conn, $order_query);
         <br>
         <table id="orderInfo">
             <tr>
-                <th colspan="2"><h2>Order Details</h2></th>
+                <th colspan="4"><h2>Order Details</h2></th>
             </tr>
             <tr>
                 <th>Item</th>
+                <th>Quantity</th>
                 <th>Price</th>
+                <th>Item Total</th>
             </tr>
             <?php
             // Check if there are any orders
             if (mysqli_num_rows($order_result) > 0) {
                 // Loop through each order and display it
                 while ($order_data = mysqli_fetch_assoc($order_result)) {
+                    $item_total_price = $order_data['item_price'] * $order_data['item_quantity'];
                     echo '<tr>';
                     echo '<td>' . htmlspecialchars($order_data['item_name']) . '</td>';
+
+                    echo '<td>' . htmlspecialchars($order_data['item_quantity']) . '</td>';
+
                     echo '<td>₱' . number_format($order_data['item_price'], 2) . '</td>';
+
+                    echo '<td>₱' . number_format($item_total_price, 2) . '</td>';
                     echo '</tr>';
                 }
             } else {
-                echo '<tr><td colspan="2">No order details found.</td></tr>';
+                echo '<tr><td colspan="4">No order details found.</td></tr>';
             }
             ?>
             <tr>
                 <td><h3>Total Price: </h3></td>
-                <td>₱<?php echo htmlspecialchars($address_data['total_price']); ?></td>
+                <td colspan="3">₱<?php echo htmlspecialchars($address_data['total_price']); ?></td>
             </tr>
         </table>
     </section>

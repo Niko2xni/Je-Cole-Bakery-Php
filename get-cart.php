@@ -13,7 +13,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-$query = "SELECT item_name, item_price FROM cart WHERE user_id = ?";
+$query = "SELECT item_name, item_price, item_quantity FROM cart WHERE user_id = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param('s', $user_id); // 'i' means integer
 $stmt->execute();
@@ -26,8 +26,9 @@ while ($row = $result->fetch_assoc()) {
     $items[] = [
         'item_name' => $row['item_name'],
         'item_price' => (float)$row['item_price'],
+        'item_quantity' => (int)$row['item_quantity'],
     ];
-    $total_price += (float)$row['item_price']; // Ensure total is numeric
+    $total_price += (float)$row['item_price'] * (int)$row['item_quantity']; // Ensure total is numeric
     $_SESSION['total_price'] = $total_price;
 }
 

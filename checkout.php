@@ -10,8 +10,8 @@ session_regenerate_id(true);
 $_SESSION['session_id'] = session_id();
 $session_id = $_SESSION['session_id'];
 
-$query = "INSERT INTO orders (user_id, session_id, item_name, item_price)
-          SELECT user_id, ?, item_name, item_price 
+$query = "INSERT INTO orders (user_id, session_id, item_name, item_price, item_quantity)
+          SELECT user_id, ?, item_name, item_price, item_quantity 
           FROM cart WHERE user_id = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param('ss', $session_id, $user_id);
