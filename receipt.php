@@ -66,7 +66,6 @@ $order_result = mysqli_query($conn, $order_query);
                     <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="menu.php">Menu</a></li>
                     <li class="nav-item"><a class="nav-link" href="aboutus.php">About Us</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="#" id="openCart">Cart</a></li>
                     <?php if ($_SESSION['is_logged_in']): ?>
                         <li class="nav-item"><a class="nav-link" href="logout.php">Log out</a></li>
                         <li>Welcome, <?php echo htmlspecialchars($_SESSION['user_id']); ?></li>  
