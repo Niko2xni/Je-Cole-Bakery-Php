@@ -148,7 +148,12 @@ if(!isset($_SESSION['is_logged_in'])){
                     <div class="card-body">
                         <h5 class="card-title">Classic Croissant</h5>
                         <p class="card-text">PHP 40</p>
-                        <button class="btn btn-primary w-100" onclick="addToCart('Classic Croissant', 40.00)">ADD TO CART</button>
+                        <div class="input-group mb-3" id="qty">
+                            <button class="input-group-text decrement-btn" onclick="decrement()">-</button>
+                            <input type="text" class="form-control text-center product_quantity bg-white" id="product_quantity" value="1">
+                            <button class="input-group-text increment-btn" onclick="increment()">+</button>
+                        </div>
+                        <button class="btn btn-primary w-100" onclick="addToCart('Classic Croissant', 40.00, document.getElementById('product_quantity').value)">ADD TO CART</button>
                     </div>
                 </div>
             </div>
@@ -159,7 +164,12 @@ if(!isset($_SESSION['is_logged_in'])){
                     <div class="card-body">
                         <h5 class="card-title">Medium Baguette</h5>
                         <p class="card-text">PHP 89</p>
-                        <button class="btn btn-primary w-100" onclick="addToCart('Medium Baguette', 89.00)">ADD TO CART</button>
+                        <div class="input-group mb-3" id="qty">
+                            <button class="input-group-text decrement-btn" onclick="decrement()">-</button>
+                            <input type="text" class="form-control text-center product_quantity1 bg-white" id="product_quantity1" value="1">
+                            <button class="input-group-text increment-btn" onclick="increment()">+</button>
+                        </div>
+                        <button class="btn btn-primary w-100" onclick="addToCart('Medium Baguette', 89.00, document.getElementById('product_quantity1').value)">ADD TO CART</button>
                     </div>
                 </div>
             </div>
@@ -170,7 +180,12 @@ if(!isset($_SESSION['is_logged_in'])){
                     <div class="card-body">
                         <h5 class="card-title">Pan au Chocolat</h5>
                         <p class="card-text">PHP 45</p>
-                        <button class="btn btn-primary w-100" onclick="addToCart('Pan au Chocolat', 45.00)">ADD TO CART</button>
+                        <div class="input-group mb-3" id="qty">
+                            <button class="input-group-text decrement-btn" onclick="decrement()">-</button>
+                            <input type="text" class="form-control text-center product_quantity2 bg-white" id="product_quantity2" value="1">
+                            <button class="input-group-text increment-btn" onclick="increment()">+</button>
+                        </div>
+                        <button class="btn btn-primary w-100" onclick="addToCart('Pan au Chocolat', 45.00, document.getElementById('product_quantity2').value)">ADD TO CART</button>
                     </div>
                 </div>
             </div>
@@ -181,7 +196,12 @@ if(!isset($_SESSION['is_logged_in'])){
                     <div class="card-body">
                         <h5 class="card-title">Strawberry Macaroons</h5>
                         <p class="card-text">PHP 30</p>
-                        <button class="btn btn-primary w-100" onclick="addToCart('Strawberry Macaroons', 30.00)">ADD TO CART</button>
+                        <div class="input-group mb-3" id="qty">
+                            <button class="input-group-text decrement-btn" onclick="decrement()">-</button>
+                            <input type="text" class="form-control text-center product_quantity3 bg-white" id="product_quantity3" value="1">
+                            <button class="input-group-text increment-btn" onclick="increment()">+</button>
+                        </div>
+                        <button class="btn btn-primary w-100" onclick="addToCart('Strawberry Macaroons', 30.00, document.getElementById('product_quantity3').value)">ADD TO CART</button>
                     </div>
                 </div>
             </div>
@@ -192,7 +212,12 @@ if(!isset($_SESSION['is_logged_in'])){
                     <div class="card-body">
                         <h5 class="card-title">Eclair</h5>
                         <p class="card-text">PHP 25</p>
-                        <button class="btn btn-primary w-100" onclick="addToCart('Eclair', 25.00)">ADD TO CART</button>
+                        <div class="input-group mb-3" id="qty">
+                            <button class="input-group-text decrement-btn" onclick="decrement()">-</button>
+                            <input type="text" class="form-control text-center product_quantity4 bg-white" id="product_quantity4" value="1">
+                            <button class="input-group-text increment-btn" onclick="increment()">+</button>
+                        </div>
+                        <button class="btn btn-primary w-100" onclick="addToCart('Eclair', 25.00, document.getElementById('product_quantity4').value)">ADD TO CART</button>
                     </div>
                 </div>
             </div>
@@ -203,7 +228,12 @@ if(!isset($_SESSION['is_logged_in'])){
                     <div class="card-body">
                         <h5 class="card-title">Paris-Brest</h5>
                         <p class="card-text">PHP 129</p>
-                        <button class="btn btn-primary w-100" onclick="addToCart('Paris-Brest', 129.00)">ADD TO CART</button>
+                        <div class="input-group mb-3" id="qty">
+                            <button class="input-group-text decrement-btn" onclick="decrement()">-</button>
+                            <input type="text" class="form-control text-center product_quantity5 bg-white" id="product_quantity5" value="1">
+                            <button class="input-group-text increment-btn" onclick="increment()">+</button>
+                        </div>
+                        <button class="btn btn-primary w-100" onclick="addToCart('Paris-Brest', 129.00, document.getElementById('product_quantity5').value)">ADD TO CART</button>
                     </div>
                 </div>
             </div>
