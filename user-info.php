@@ -16,13 +16,7 @@ $customer_query = "SELECT * FROM users WHERE email = '$email'";
 $customer_result = mysqli_query($conn, $customer_query);
 $customer_data = mysqli_fetch_assoc($customer_result);
 
-$session_id = $_SESSION['session_id'];
-$address_query = "SELECT * FROM receipts WHERE session_id = '$session_id'";
-$address_result = mysqli_query($conn, $address_query);
-$address_data = mysqli_fetch_assoc($address_result);
 
-$order_query = "SELECT item_name, item_price, item_quantity FROM orders WHERE session_id = '$session_id'";
-$order_result = mysqli_query($conn, $order_query);
 ?>
 
 <!DOCTYPE html>
@@ -36,22 +30,55 @@ $order_result = mysqli_query($conn, $order_query);
     <link rel ="stylesheet" href="styles.css">
     <link rel="icon" href="images/tab.png">
     <style>
-        h1, h2 {
-            text-align: center;
-            font-size: 30px;
-        }
 
-        table {
-            background-color: white;
-            height:250px;
-            width: 500px;
-            margin: 0 auto;
-        }
+    h1, h2 {
+        text-align: center;
+        font-size: 30px;
+        color: #333;
+        font-family: Arial, sans-serif;
+    }
 
-        td, th {
-            padding: 15px;
-        }
-    </style>
+    table#customerInfo {
+        background-color: #D2B48C; 
+        width: 60%; 
+        margin: 20px auto;
+        border-collapse: collapse;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: #F5DEB3; 
+    }
+
+    
+    table#customerInfo th {
+        background-color: #F5DEB3; 
+        color: white;
+        padding: 15px;
+        font-size: 22px;
+        font-weight: bold;
+    }
+
+    table#customerInfo td {
+        padding: 15px;
+        font-size: 18px;
+        color: #8B4513; 
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    table#customerInfo tr:nth-child(even) {
+        background-color: #FFF8DC;
+    }
+
+    table#customerInfo td:first-child {
+        width: 40%; 
+        font-weight: bold;
+    }
+
+    table#customerInfo th, table#customerInfo td {
+        text-align: left;
+    }
+</style>
+
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
@@ -79,10 +106,10 @@ $order_result = mysqli_query($conn, $order_query);
 
     <section>
         <br>
-        <h1>Online Receipt</h1>
+        
         <table id="customerInfo">
             <tr>
-                <th colspan="2"><h2>Customer Details</h2></th>
+                <th colspan="2"><h1>User Details</h1></th>
             </tr>
             <tr>
                 <td><b>First Name:</b></td>
@@ -100,62 +127,7 @@ $order_result = mysqli_query($conn, $order_query);
                 <td><b>Contact Number:</b></td>
                 <td><?php echo htmlspecialchars($customer_data['contactnumber']); ?></td>
             </tr>
-            <tr>
-                <td><b>House Number</b></td>
-                <td><?php echo htmlspecialchars($address_data['housenumber']); ?></td>
-            </tr>
-            <tr>
-                <td><b>Street Name:</b></td>
-                <td><?php echo htmlspecialchars($address_data['streetname']); ?></td>
-            </tr>
-            <tr>
-                <td><b>Barangay:</b></td>
-                <td><?php echo htmlspecialchars($address_data['barangay']); ?></td>
-            </tr>
-            <tr>
-                <td><b>Postal code:</b></td>
-                <td><?php echo htmlspecialchars($address_data['postalcode']); ?></td>
-            </tr>
-            <tr>
-                <td><b>City:</b></td>
-                <td><?php echo htmlspecialchars($address_data['city']); ?></td>
-            </tr>
-        </table>
-        <br>
-        <table id="orderInfo">
-            <tr>
-                <th colspan="4"><h2>Order Details</h2></th>
-            </tr>
-            <tr>
-                <th>Item</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Item Total</th>
-            </tr>
-            <?php
-            // Check if there are any orders
-            if (mysqli_num_rows($order_result) > 0) {
-                // Loop through each order and display it
-                while ($order_data = mysqli_fetch_assoc($order_result)) {
-                    $item_total_price = $order_data['item_price'] * $order_data['item_quantity'];
-                    echo '<tr>';
-                    echo '<td>' . htmlspecialchars($order_data['item_name']) . '</td>';
-
-                    echo '<td>' . htmlspecialchars($order_data['item_quantity']) . '</td>';
-
-                    echo '<td>₱' . number_format($order_data['item_price'], 2) . '</td>';
-
-                    echo '<td>₱' . number_format($item_total_price, 2) . '</td>';
-                    echo '</tr>';
-                }
-            } else {
-                echo '<tr><td colspan="4">No order details found.</td></tr>';
-            }
-            ?>
-            <tr>
-                <td><h3>Total Price: </h3></td>
-                <td colspan="3">₱<?php echo htmlspecialchars($address_data['total_price']); ?></td>
-            </tr>
+            
         </table>
     </section>
 
