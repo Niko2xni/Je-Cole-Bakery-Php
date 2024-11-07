@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
                     <li class="nav-item"><a class="nav-link" href="aboutus.php">About Us</a></li>
                     <?php if ($_SESSION['is_logged_in']): ?>
                         <li class="nav-item"><a class="nav-link" href="logout.php">Log out</a></li>
-                        <li>Welcome, <?php echo htmlspecialchars($_SESSION['user_id']); ?></li>  
+                        <li class="nav-item"><a class="nav-link" href="user-info.php">Welcome, <?php echo htmlspecialchars($_SESSION['user_id']); ?></a></li>  
                     <?php else: ?>
                         <li class="nav-item"><a class="nav-link" href="login.php">Log in</a></li>
                     <?php endif; ?>
