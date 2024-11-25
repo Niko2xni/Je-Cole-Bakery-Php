@@ -151,7 +151,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
                 <input type="text" id="city" name="city" required>
 
                 <label for="postalCode">Postal Code:</label>
-                <input type="number" id="postalCode" pattern="\d*" name="postalCode" required>
+                <input type="text" id="postalCode" name="postalCode" pattern="\d{4}" maxlength="4" required>
+                <span class="error-message" style="color:red; display:none;">Please enter the required format.</span>         
 
                 <label for="paymentMethod">Payment Method:</label>
                 <select id="paymentMethod" name="paymentMethod" required>
@@ -177,7 +178,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
                     <li><a href="index.php" class="text-white">Home</a></li>
                         <li><a href="menu.php" class="text-white">Menu</a></li>
                         <li><a href="aboutus.php" class="text-white">About us</a></li>
-                        <li><a href="login.php" class="text-white">Log in</a></li>
                     </ul>
                 </div>
 
@@ -197,5 +197,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
     </footer>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script> document.getElementById('postalCode').addEventListener('input', function (e) { 
+        const input = e.target.value; 
+        const errorMessage = document.querySelector('.error-message'); 
+        // Check if input length is exactly 4 digits and if it contains only numeric values 
+        const regex = /^\d{4}$/; 
+        if (!regex.test(input)) { 
+            errorMessage.style.display = 'block'; 
+            } else { 
+                errorMessage.style.display = 'none'; 
+                } }); 
+    </script>
+    
 </body>
 </html>

@@ -208,7 +208,6 @@ if (!isset($_SESSION['is_logged_in'])) {
                         <li><a href="index.php" class="text-white">Home</a></li>
                         <li><a href="menu.php" class="text-white">Menu</a></li>
                         <li><a href="aboutus.php" class="text-white">About us</a></li>
-                        <li><a href="login.php" class="text-white">Log in</a></li>
                     </ul>
                 </div>
 

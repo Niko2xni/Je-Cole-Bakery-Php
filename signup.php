@@ -117,29 +117,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
 
             <form id="signup" action="signup.php" method="POST">
                 <table>
-                    <tr>
+                <tr>
                         <td><label for="Fname"><h4>First Name:</h4></label></td>
-                        <td><input type="text" name="firstname" id="Fname" required></td>
+                        <td><input type="text" name="firstname" id="Fname" value="<?php echo htmlspecialchars($_POST['firstname'] ?? ''); ?>" required></td>
                     </tr>
                     <tr>
                         <td><label for="Lname"><h4>Last Name:</h4></label></td>
-                        <td><input type="text" name="lastname" id="Lname" required></td>
+                        <td><input type="text" name="lastname" id="Lname" value="<?php echo htmlspecialchars($_POST['lastname'] ?? ''); ?>" required></td>
                     </tr>
                     <tr>
                         <td><label for="number"><h4>Phone Number:</h4></label></td>
-                        <td><input type="number" name="contactnumber" id="number" maxlength="11" title="Please enter exactly 11 digits." required></td>
+                        <td><input type="text" name="contactnumber" id="number" pattern="09\d{9}" maxlength="11" title="Please enter exactly 11 digits starting with 09." value="<?php echo htmlspecialchars($_POST['contactnumber'] ?? ''); ?>" required> 
+                        <span class="error-message" style="color:red; display:none;">Please enter exactly 11 digits starting with 09.</span> </td></td>
                     </tr>
                     <tr>
                         <td><label for="email"><h4>Email Address:</h4></label></td>
-                        <td><input type="email" name="email" id="email" required></td>
+                        <td><input type="email" name="email" id="email" value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>" required></td>
                     </tr>
                     <tr>
                         <td><label for="pass"><h4>Password:</h4></label></td>
-                        <td><input type="password" name="password" id="pass" required></td>
+                        <td><input type="password" name="password" id="pass" value="<?php echo htmlspecialchars($_POST['password'] ?? ''); ?>" required></td>
                     </tr>
                     <tr>
                         <td><label for="pass2"><h4>Confirm Password:</h4></label></td>
-                        <td><input type="password" name="confirmpassword" id="pass2" required></td>
+                        <td><input type="password" name="confirmpassword" id="pass2" value="<?php echo htmlspecialchars($_POST['password'] ?? ''); ?>" required></td>
                     </tr>
                 </table>
                 
@@ -157,7 +158,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
                         <li><a href="index.php" class="text-white">Home</a></li>
                         <li><a href="menu.php" class="text-white">Menu</a></li>
                         <li><a href="aboutus.php" class="text-white">About us</a></li>
-                        <li><a href="login.php" class="text-white">Log in</a></li>
                     </ul>
                 </div>
 
@@ -177,5 +177,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
     </footer>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script> document.getElementById('number').addEventListener('input', function (e) { 
+        const input = e.target.value; 
+        const errorMessage = document.querySelector('.error-message'); 
+        const regex = /^09\d{9}$/; 
+        if (!regex.test(input)) { errorMessage.style.display = 'block'; } 
+        else { errorMessage.style.display = 'none'; } }); 
+    </script>
 </body>
 </html>
