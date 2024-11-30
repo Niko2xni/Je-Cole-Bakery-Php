@@ -1,4 +1,11 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'phpmailer/src/Exception.php';
+require 'phpmailer/src/PHPMailer.php';
+require 'phpmailer/src/SMTP.php';
+
 session_start();
 
 if(!isset($_SESSION['is_logged_in'])){
@@ -28,9 +35,144 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
     $postal = mysqli_real_escape_string($conn, $_POST['postalCode']);
     $city = mysqli_real_escape_string($conn, $_POST['city']);
 
+    $email = $_SESSION['email'];
+    $customer_query = "SELECT * FROM users WHERE email = '$email'";
+    $customer_result = mysqli_query($conn, $customer_query);
+    $customer_data = mysqli_fetch_assoc($customer_result);
+
+    $session_id = $_SESSION['session_id'];
+    $address_query = "SELECT * FROM receipts WHERE session_id = '$session_id'";
+    $address_result = mysqli_query($conn, $address_query);
+    $address_data = mysqli_fetch_assoc($address_result);
+
+    $order_query = "SELECT item_name, item_price, item_quantity FROM orders WHERE session_id = '$session_id'";
+    $order_result = mysqli_query($conn, $order_query);
+
     $query = "INSERT INTO receipts (user_id, session_id, order_date, total_price, housenumber, streetname, barangay, postalcode, city) VALUES ('$user_id', '$session_id', '$order_date', '$total_price', '$house', '$street', '$barangay', '$postal', '$city')";
 
     if (mysqli_query($conn, $query)) {
+        $mail = new PHPMailer(true);
+
+        try {
+            // Server settings
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'jecolesbakery@gmail.com'; // Your Gmail address
+            $mail->Password = 'qmramjiqtaqmmdvp'; // Your Gmail password or App Password
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // Use SSL encryption
+            $mail->Port = 465; // SSL port
+
+            $mail->setFrom('jecolesbakery@gmail.com');
+            $mail->addAddress($email);
+
+            $mail->isHTML(true);
+            $mail->Subject = 'Order Receipt';
+
+            $email_body = '
+                <html>
+                    <head>
+                        <style>
+                            table {
+                                width: 100%;
+                                border-collapse: collapse;
+                            }
+                            table, th, td {
+                                border: 1px solid black;
+                            }
+                            th, td {
+                                padding: 8px;
+                                text-align: left;
+                            }
+                            th {
+                                background-color: #f2f2f2;
+                            }
+                            .customer-details {
+                                margin-bottom: 20px;
+                            }
+                            .customer-details p {
+                                margin: 5px 0;
+                                font-size: 14px;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <h2>Receipt for Your Order</h2>
+                        <p>Thank you for shopping with us! Below are your order details:</p>
+
+                        <div class="customer-details">
+                            <h3>Customer Details:</h3>
+                            <p><strong>Name:</strong> ' . htmlspecialchars($customer_data['firstname']) . ' ' . htmlspecialchars($customer_data['lastname']) . '</p>
+                            <p><strong>Email:</strong> ' . htmlspecialchars($customer_data['email']) . '</p>
+                            <p><strong>Phone:</strong> ' . htmlspecialchars($customer_data['contactnumber']) . '</p>
+                            <p><strong>Address:</strong> ' . htmlspecialchars($house) . ' ' . htmlspecialchars($street) . ', Brgy. ' . htmlspecialchars($barangay) . ', ' . htmlspecialchars($city) . ' - ' . htmlspecialchars($postal) . '</p>
+                        </div>
+
+                        <table id="orderInfo">
+                    <tr>
+                        <th colspan="4"><h2>Order Details</h2></th>
+                    </tr>
+                    <tr>
+                        <th>Item</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Item Total</th>
+                    </tr>
+            ';
+
+            if (mysqli_num_rows($order_result) > 0) {
+                while ($order_data = mysqli_fetch_assoc($order_result)) {
+                    $item_total_price = $order_data['item_price'] * $order_data['item_quantity'];
+                    $email_body .= '<tr>';
+                    $email_body .= '<td>' . htmlspecialchars($order_data['item_name']) . '</td>';
+
+                    $email_body .= '<td>' . htmlspecialchars($order_data['item_quantity']) . '</td>';
+
+                    $email_body .= '<td>₱' . number_format($order_data['item_price'], 2) . '</td>';
+
+                    $email_body .= '<td>₱' . number_format($item_total_price, 2) . '</td>';
+                    $email_body .= '</tr>';
+                }
+            } else {
+                $email_body .= '<tr><td colspan="4">No order details found.</td></tr>';
+            }    
+
+            $email_body .= '
+                        <tr>
+                            <td><h3>Total Price: </h3></td>
+                            <td colspan="3">₱ ' . number_format($total_price, 2) . '</td>
+                        </tr>
+                        <tr>
+                            <td><h3>Delivery Fee: </h3></td>
+                            <td colspan="3">₱ ' . number_format($delivery_fee, 2) . '</td>
+                        </tr>
+                        <tr>
+                            <td><h3>Overall Total: </h3></td>
+                            <td colspan="3">₱ ' . number_format($overall_total, 2) . '</td>
+                        </tr>
+                    </table>
+                </body>
+            </html>
+            ';
+
+            $mail->Body = $email_body;
+            $mail->AltBody = 'This is the plain text version of the email content.';
+
+            $mail->send();
+            echo "
+            <script>
+                alert('Order Processed Successfully!');
+                document.location.href = 'delivery.php';
+            </script>
+                ";
+        } catch (Exception $e) {
+            echo "
+            <script>
+                alert('Message could not be sent. Mailer Error: {$mail->ErrorInfo}');
+                document.location.href = 'delivery.php';
+            </script>
+                ";
+        }
         header("Location: receipt.php");
         exit();
 

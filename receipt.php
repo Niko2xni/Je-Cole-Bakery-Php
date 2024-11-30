@@ -160,17 +160,17 @@ $order_result = mysqli_query($conn, $order_query);
 
             ?>
             <tr>
-    <td><h3>Total Price: </h3></td>
-    <td colspan="3">₱ <?php echo number_format($total_price, 2); ?></td>
-</tr>
-<tr>
-    <td><h3>Delivery Fee: </h3></td>
-    <td colspan="3">₱ <?php echo $delivery_fee == 0 ? 'Free' : number_format($delivery_fee, 2); ?></td>
-</tr>
-<tr>
-    <td><h3>Overall Total: </h3></td>
-    <td colspan="3">₱ <?php echo number_format($overall_total, 2); ?></td> <!-- Display the overall total -->
-</tr>
+                <td><h3>Total Price: </h3></td>
+                <td colspan="3">₱ <?php echo number_format($total_price, 2); ?></td>
+            </tr>
+            <tr>
+                <td><h3>Delivery Fee: </h3></td>
+                <td colspan="3">₱ <?php echo $delivery_fee == 0 ? 'Free' : number_format($delivery_fee, 2); ?></td>
+            </tr>
+            <tr>
+                <td><h3>Overall Total: </h3></td>
+                <td colspan="3">₱ <?php echo number_format($overall_total, 2); ?></td> <!-- Display the overall total -->
+            </tr>
         </table>
     </section>
 
