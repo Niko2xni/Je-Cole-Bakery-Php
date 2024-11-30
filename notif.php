@@ -11,78 +11,67 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-$email = $_SESSION['email'];
-$customer_query = "SELECT * FROM users WHERE email = '$email'";
-$customer_result = mysqli_query($conn, $customer_query);
-$customer_data = mysqli_fetch_assoc($customer_result);
-
+$notification_query = "SELECT item_name, item_price, item_quantity, delivery_status FROM orders ORDER BY session_id DESC";
+$notification_result = mysqli_query($conn, $notification_query);
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Je'Cole's Bakery - User Profile</title>
+    <title>Je'Cole's Bakery - Order Status</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel ="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="images/tab.png">
     <style>
+        h1, h2 {
+            text-align: center;
+            font-size: 30px;
+            color: #333;
+            font-family: Arial, sans-serif;
+        }
 
-    h1, h2 {
-        text-align: center;
-        font-size: 30px;
-        color: #333;
-        font-family: Arial, sans-serif;
-    }
+        table#notificationInfo {
+            background-color: #D2B48C;
+            width: 60%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: #F5DEB3;
+        }
 
-    section, table {
-        cursor: default;
-    }
+        table#notificationInfo th {
+            background-color: #F5DEB3;
+            color: white;
+            padding: 15px;
+            font-size: 22px;
+            font-weight: bold;
+        }
 
-    table#customerInfo {
-        background-color: #D2B48C; 
-        width: 60%; 
-        margin: 20px auto;
-        border-collapse: collapse;
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: #F5DEB3; 
-    }
+        table#notificationInfo td {
+            padding: 15px;
+            font-size: 18px;
+            color: #8B4513;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            border-bottom: 1px solid #dee2e6;
+        }
 
-    
-    table#customerInfo th {
-        background-color: #F5DEB3; 
-        color: white;
-        padding: 15px;
-        font-size: 22px;
-        font-weight: bold;
-    }
+        table#notificationInfo tr:nth-child(even) {
+            background-color: #FFF8DC;
+        }
 
-    table#customerInfo td {
-        padding: 15px;
-        font-size: 18px;
-        color: #8B4513; 
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        border-bottom: 1px solid #dee2e6;
-    }
+        table#notificationInfo td:first-child {
+            width: 40%;
+            font-weight: bold;
+        }
 
-    table#customerInfo tr:nth-child(even) {
-        background-color: #FFF8DC;
-    }
-
-    table#customerInfo td:first-child {
-        width: 40%; 
-        font-weight: bold;
-    }
-
-    table#customerInfo th, table#customerInfo td {
-        text-align: left;
-    }
-</style>
-
+        table#notificationInfo th, table#notificationInfo td {
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
@@ -100,7 +89,7 @@ $customer_data = mysqli_fetch_assoc($customer_result);
                     <?php if ($_SESSION['is_logged_in']): ?>
                         <li class="nav-item"><a class="nav-link" href="logout.php">Log out</a></li>
                         <li class="nav-item"><a class="nav-link" href="notif.php">Order Status</a></li>
-                        <li class="nav-item"><a class="nav-link" href="user-info.php">Welcome, <?php echo htmlspecialchars($_SESSION['user_id']); ?></li>  
+                        <li class="nav-item"><a class="nav-link" href="user-info.php">Welcome, <?php echo htmlspecialchars($_SESSION['user_id']); ?></a></li>  
                     <?php else: ?>
                         <li class="nav-item"><a class="nav-link" href="login.php">Log in</a></li>
                     <?php endif; ?>
@@ -111,28 +100,28 @@ $customer_data = mysqli_fetch_assoc($customer_result);
 
     <section>
         <br>
-        
-        <table id="customerInfo">
+        <h1>Order Status</h1>
+        <table id="notificationInfo">
             <tr>
-                <th colspan="2"><h1>User Details</h1></th>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Status</th>
             </tr>
-            <tr>
-                <td><b>First Name:</b></td>
-                <td><?php echo htmlspecialchars($customer_data['firstname']); ?></td>
-            </tr>
-            <tr>
-                <td><b>Last Name:</b></td>
-                <td><?php echo htmlspecialchars($customer_data['lastname']); ?></td>
-            </tr>
-            <tr>
-                <td><b>Email:</b></td>
-                <td><?php echo htmlspecialchars($customer_data['email']); ?></td>
-            </tr>
-            <tr>
-                <td><b>Contact Number:</b></td>
-                <td><?php echo htmlspecialchars($customer_data['contactnumber']); ?></td>
-            </tr>
-            
+            <?php if (mysqli_num_rows($notification_result) > 0): ?>
+                <?php while ($notification = mysqli_fetch_assoc($notification_result)): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($notification['item_name']); ?></td>
+                        <td><?php echo htmlspecialchars($notification['item_quantity']); ?></td>
+                        <td>₱<?php echo number_format($notification['item_price'], 2); ?></td>
+                        <td><?php echo htmlspecialchars($notification['delivery_status']); ?></td>
+                    </tr>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="4" style="text-align: center;">No order found.</td>
+                </tr>
+            <?php endif; ?>
         </table>
     </section>
 
@@ -162,18 +151,6 @@ $customer_data = mysqli_fetch_assoc($customer_result);
             </div>
         </div>
     </footer>
-
-    <script>
-        // Disable dragging
-        document.addEventListener('dragstart', function (event) {
-            event.preventDefault();
-        });
-
-        const table = document.querySelector('#customerInfo');
-        table.addEventListener('mousedown', function (event) {
-            event.preventDefault(); //
-        });
-    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
