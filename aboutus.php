@@ -41,10 +41,6 @@ if (!isset($_SESSION['is_logged_in'])) {
         </div>
     </nav>
 
-    <video autoplay loop muted plays-inline>
-        <source src="media/bread.mp4" type="video/mp4">
-    </video>
-
     <div class="slider">
         <div class="list">
             <div class="item">

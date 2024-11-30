@@ -30,6 +30,6 @@ if (!$clearStmt->execute()) {
     exit();
 }
 
-// Return success response
+
 echo json_encode(['success' => true]);
 ?>

@@ -1,20 +1,22 @@
 <?php
-    session_start();
+session_start();
 
-    if(!isset($_SESSION['is_logged_in'])){
-        $_SESSION['is_logged_in'] = false;
-    }
+if(!isset($_SESSION['is_logged_in'])){
+    $_SESSION['is_logged_in'] = false;
+}
 
-    $conn = mysqli_connect("localhost", "root", "", "user_registration");
+$conn = mysqli_connect("localhost", "root", "", "user_registration");
 
-    if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
 
-    $email = $_SESSION['email'];
-    $customer_query = "SELECT * FROM users WHERE email = '$email'";
-    $customer_result = mysqli_query($conn, $customer_query);
-    $customer_data = mysqli_fetch_assoc($customer_result);
+$email = $_SESSION['email'];
+$customer_query = "SELECT * FROM users WHERE email = '$email'";
+$customer_result = mysqli_query($conn, $customer_query);
+$customer_data = mysqli_fetch_assoc($customer_result);
+
+
 ?>
 
 <!DOCTYPE html>

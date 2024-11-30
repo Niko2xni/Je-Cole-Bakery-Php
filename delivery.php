@@ -16,6 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
     $user_id = $_SESSION['user_id'];
     $session_id = $_SESSION['session_id'];
     $total_price = $_SESSION['total_price'];
+    $delivery_fee = $total_price > 250 ? 0 : 50; 
+    $_SESSION['delivery_fee'] = $delivery_fee;
+    $overall_total = $total_price + $delivery_fee;
+    $_SESSION['overall_total'] = $overall_total; 
 
     $order_date = date('Y-m-d H:i:s');
     $house = mysqli_real_escape_string($conn, $_POST['houseNumber']);
@@ -161,7 +165,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
                 </select>
 
                 <div class="total-container">
-                    <p id="cartTotal">TOTAL: ₱<?php echo htmlspecialchars($_SESSION['total_price']); ?></p>
+                <p id="cartTotal">Total: ₱ <?php echo isset($_SESSION['total_price']) ? number_format($_SESSION['total_price'], 2) : '0.00'; ?></p>
+                <p id="deliveryFee">Delivery Fee: ₱ <?php echo isset($_SESSION['delivery_fee']) && $_SESSION['delivery_fee'] == 0 ? 'Free' : '50.00'; ?></p>
+                <p id="overallTotal">OVERALL TOTAL: ₱ <?php echo isset($_SESSION['overall_total']) ? number_format($_SESSION['overall_total'], 2) : '0.00'; ?></p>
                 </div>
 
                 <button type="submit" class="pay-btn" id="payNow" name="payNow">PAY NOW</button>
@@ -200,7 +206,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
     <script> document.getElementById('postalCode').addEventListener('input', function (e) { 
         const input = e.target.value; 
         const errorMessage = document.querySelector('.error-message'); 
-        // Check if input length is exactly 4 digits and if it contains only numeric values 
+
         const regex = /^\d{4}$/; 
         if (!regex.test(input)) { 
             errorMessage.style.display = 'block'; 

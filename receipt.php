@@ -151,11 +151,26 @@ $order_result = mysqli_query($conn, $order_query);
             } else {
                 echo '<tr><td colspan="4">No order details found.</td></tr>';
             }
+
+            $total_price = $address_data['total_price']; 
+
+            $delivery_fee = $_SESSION['delivery_fee'];
+
+            $overall_total = $total_price + $delivery_fee;
+
             ?>
             <tr>
-                <td><h3>Total Price: </h3></td>
-                <td colspan="3">₱<?php echo htmlspecialchars($address_data['total_price']); ?></td>
-            </tr>
+    <td><h3>Total Price: </h3></td>
+    <td colspan="3">₱ <?php echo number_format($total_price, 2); ?></td>
+</tr>
+<tr>
+    <td><h3>Delivery Fee: </h3></td>
+    <td colspan="3">₱ <?php echo $delivery_fee == 0 ? 'Free' : number_format($delivery_fee, 2); ?></td>
+</tr>
+<tr>
+    <td><h3>Overall Total: </h3></td>
+    <td colspan="3">₱ <?php echo number_format($overall_total, 2); ?></td> <!-- Display the overall total -->
+</tr>
         </table>
     </section>
 

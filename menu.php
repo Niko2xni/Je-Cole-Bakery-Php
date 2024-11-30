@@ -17,12 +17,23 @@ if(!isset($_SESSION['is_logged_in'])){
     <link rel ="stylesheet" href="styles.css">
     <link rel="icon" href="images/tab.png">
     <style>
-        .hero-section video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .hero-section  {
+            background-image: url("images/menubg.jpg");
+            background-repeat: no-repeat;
+            background-size: cover; 
+            background-position: center; 
+            height: 70vh; 
         }
-
+        .hero-section::before {
+            content: ""; 
+            position: absolute; 
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.4); 
+            z-index: 1; 
+}
         .hero-content {
             position: absolute;
             top: 50%;
@@ -30,6 +41,7 @@ if(!isset($_SESSION['is_logged_in'])){
             transform: translate(-50%, -50%);
             text-align: center;
             color: white;
+            z-index: 1; 
         }
 
         .hero-content img {
@@ -128,10 +140,7 @@ if(!isset($_SESSION['is_logged_in'])){
     </nav>
 
     <div class="hero-section">
-        <video autoplay loop muted plays-inline>
-            <source src="media/AboutBread.mp4" type="video/mp4">
-        </video>
-
+      
         <div class="hero-content">
             <img id="menuLogo" src="images/tab.png" alt="Je'Cole's Bakery Logo">
             <h1 class="display-4">Je'Cole's Bakery</h1>

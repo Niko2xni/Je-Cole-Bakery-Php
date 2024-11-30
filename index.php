@@ -17,15 +17,12 @@ if(!isset($_SESSION['is_logged_in'])){
     <link rel ="stylesheet" href="styles.css">
     <link rel="icon" href="images/tab.png">
     <style>
-        .hero-section video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transform: translate(-50%, -50%);
-            z-index: -1;
+        .hero-section {
+            background-image: url("images/indexbg.jpg");
+            background-repeat: no-repeat;
+            background-size: cover; 
+            background-position: center; 
+            height: 80vh; 
         }
 
         .hero-section::before {
@@ -226,10 +223,6 @@ if(!isset($_SESSION['is_logged_in'])){
     </nav>
 
     <header class="hero-section">
-        <video autoplay loop muted playsinline>
-            <source src="media/paris.mp4" type="video/mp4" />
-        </video>
-
         <div class="hero-content">
             <h1>Welcome to Je'Cole's Bakery</h1>
             <p>Experience the taste of freshly baked French pastries</p>

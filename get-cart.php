@@ -15,7 +15,7 @@ $user_id = $_SESSION['user_id'];
 
 $query = "SELECT item_name, item_price, item_quantity FROM cart WHERE user_id = ?";
 $stmt = $conn->prepare($query);
-$stmt->bind_param('s', $user_id); // 'i' means integer
+$stmt->bind_param('s', $user_id); 
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -28,11 +28,14 @@ while ($row = $result->fetch_assoc()) {
         'item_price' => (float)$row['item_price'],
         'item_quantity' => (int)$row['item_quantity'],
     ];
-    $total_price += (float)$row['item_price'] * (int)$row['item_quantity']; // Ensure total is numeric
+    $total_price += (float)$row['item_price'] * (int)$row['item_quantity']; 
     $_SESSION['total_price'] = $total_price;
 }
+$delivery_fee = $total_price > 250 ? 0 : 50; 
+$_SESSION['total_price'] = $total_price;
+$_SESSION['delivery_fee'] = $delivery_fee;
+$_SESSION['overall_total'] = $total_price + $delivery_fee; 
 
-// Return JSON response
 header('Content-Type: application/json');
 echo json_encode(['items' => $items, 'total_price' => $total_price]);
 ?>
