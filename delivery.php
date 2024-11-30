@@ -159,21 +159,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
             $mail->AltBody = 'This is the plain text version of the email content.';
 
             $mail->send();
-            echo "
-            <script>
-                alert('Order Processed Successfully!');
-                document.location.href = 'delivery.php';
-            </script>
-                ";
         } catch (Exception $e) {
             echo "
             <script>
                 alert('Message could not be sent. Mailer Error: {$mail->ErrorInfo}');
-                document.location.href = 'delivery.php';
+                window.location.href = 'index.php';
             </script>
                 ";
         }
-        header("Location: receipt.php");
+        echo "
+            <script>
+                alert('Order Processed Successfully!');
+                document.location.href = 'receipt.php';
+            </script>
+                ";
         exit();
 
     } else {
